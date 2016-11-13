@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import static ru.donstu.cloudstorage.config.constant.Constants.PROJECT_DOMAIN;
+import static ru.donstu.cloudstorage.config.constant.Constants.PACKAGE_PROJECT;
 
 /**
  * Конфигурация Web MVC
@@ -14,6 +14,6 @@ import static ru.donstu.cloudstorage.config.constant.Constants.PROJECT_DOMAIN;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(PROJECT_DOMAIN)
+@ComponentScan(PACKAGE_PROJECT)
 public class WebAppConfiguration extends WebMvcConfigurerAdapter {
 }

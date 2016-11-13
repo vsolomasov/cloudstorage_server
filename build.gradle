@@ -22,7 +22,19 @@ dependencies {
      * Libraries Spring
      * 1. Core
      * 2. Web MVC
+     * 3. Data JPA (Database)
      */
     compile group: 'org.springframework', name: 'spring-core', version: '4.3.3.RELEASE'
     compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.3.RELEASE'
+    compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '1.10.5.RELEASE'
+
+    /**
+     * Libraries for database
+     * 1. JDBC PostgreSQL
+     * 2. Apache Commons DBCP
+     * 3. Hibernate
+     */
+    compile group: 'org.postgresql', name: 'postgresql', version: '9.4.1211'
+    compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.1.1'
+    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.2.4.Final'
 }
