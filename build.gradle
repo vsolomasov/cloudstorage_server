@@ -19,6 +19,14 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
     /**
+     * Thymeleaf
+     * 1. Core
+     * 2. Integrated in the Spring
+     */
+    compile group: 'org.thymeleaf', name: 'thymeleaf', version: '3.0.2.RELEASE'
+    compile group: 'org.thymeleaf', name: 'thymeleaf-spring4', version: '3.0.2.RELEASE'
+
+    /**
      * Libraries Spring
      * 1. Core
      * 2. Web MVC
