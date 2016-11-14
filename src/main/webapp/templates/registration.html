@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{static/css/bootstrap.css}" />
+    <link rel="stylesheet" href="../static/css/cover.css" th:href="@{static/css/style.css}" />
+    <title>Регистрация</title>
+</head>
+<body>
+<div class="container site-wrapper" role="form" style="width: 300px">
+    <form>
+        <h2 class="text-center">Регистрация</h2>
+        <input class="form-control input-lg vertical-margin" type="email" placeholder="E-mail" required="required">
+        <input class="form-control input-lg vertical-margin" type="password" placeholder="Пароль" required="required">
+        <input class="form-control input-lg vertical-margin" type="text" placeholder="Имя">
+        <input class="form-control input-lg vertical-margin" type="date" placeholder="Дата рождения">
+        <button class="btn btn-lg lg btn-primary center-block">Регистрация</button>
+    </form>
+</div>
+</body>
+</html>
