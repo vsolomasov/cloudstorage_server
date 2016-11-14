@@ -16,4 +16,9 @@ public class TestController {
     public String test(){
         return "test";
     }
+
+    @RequestMapping(value = "/secret", method = RequestMethod.GET)
+    public String secret(){
+        return "secret";
+    }
 }

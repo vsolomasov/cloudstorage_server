@@ -31,10 +31,16 @@ dependencies {
      * 1. Core
      * 2. Web MVC
      * 3. Data JPA (Database)
+     * 4. Security Core
+     * 5. Security Web
+     * 6. Security Config
      */
     compile group: 'org.springframework', name: 'spring-core', version: '4.3.3.RELEASE'
     compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.3.RELEASE'
     compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '1.10.5.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-core', version: '4.1.3.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-web', version: '4.1.3.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-config', version: '4.1.3.RELEASE'
 
     /**
      * Libraries for database
