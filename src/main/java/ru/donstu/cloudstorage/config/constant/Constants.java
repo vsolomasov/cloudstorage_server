@@ -24,6 +24,8 @@ public class Constants {
 
     public final static String PATH_TEMPLATES = "/templates/";
 
+    public final static String CHARACTER_ENCODING = "UTF-8";
+
     public final static String SUFFIX_TEMPLATES = ".html";
 
     public final static String CSS_LOCATION = "/static/css/";

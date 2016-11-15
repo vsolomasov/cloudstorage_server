@@ -41,6 +41,7 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter implements Appl
         templateResolver.setSuffix(SUFFIX_TEMPLATES);
         templateResolver.setTemplateMode(TemplateMode.HTML);
         templateResolver.setCacheable(true);
+        templateResolver.setCharacterEncoding(CHARACTER_ENCODING);
         return templateResolver;
     }
 
@@ -56,6 +57,7 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter implements Appl
     public ThymeleafViewResolver viewResolver(){
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
+        viewResolver.setCharacterEncoding(CHARACTER_ENCODING);
         return viewResolver;
     }
 
