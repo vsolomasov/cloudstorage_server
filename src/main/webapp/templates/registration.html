@@ -9,14 +9,17 @@
     <title>Регистрация</title>
 </head>
 <body>
-<div class="container site-wrapper" role="form" style="width: 300px">
-    <form>
+<div class="container site-wrapper width-auth" role="form" style="width: 400px">
+    <form autocomplete="off" action="#" th:action="@{/registration}" th:object="${accountForm}" method="post">
         <h2 class="text-center">Регистрация</h2>
-        <input class="form-control input-lg vertical-margin" type="email" placeholder="E-mail" required="required">
-        <input class="form-control input-lg vertical-margin" type="password" placeholder="Пароль" required="required">
-        <input class="form-control input-lg vertical-margin" type="text" placeholder="Имя">
-        <input class="form-control input-lg vertical-margin" type="date" placeholder="Дата рождения">
-        <button class="btn btn-lg lg btn-primary center-block">Регистрация</button>
+        <input class="form-control input-lg vertical-margin" type="text" placeholder="Логин" th:field="*{name}">
+        <input class="form-control input-lg vertical-margin" type="email" placeholder="E-mail" th:field="*{email}">
+        <input class="form-control input-lg vertical-margin" type="password" placeholder="Пароль" th:field="*{password}">
+        <button class="btn btn-lg lg btn-primary btn-block">Зарегистрироваться</button>
+        <div class="row vertical-margin">
+            <a class="col-md-6 text-left cursor-pointer" th:href="@{/login}">Авторизоваться</a>
+            <a class="col-md-6 text-right cursor-pointer" th:href="@{/recovery}">Забыли пароль?</a>
+        </div>
     </form>
 </div>
 </body>
