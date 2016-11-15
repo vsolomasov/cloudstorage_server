@@ -1,6 +1,6 @@
 package ru.donstu.cloudstorage.domain.account.entity;
 
-import org.hibernate.annotations.GenericGenerator;
+import ru.donstu.cloudstorage.domain.account.enums.Role;
 
 import javax.persistence.*;
 import java.util.Calendar;
@@ -15,23 +15,26 @@ import java.util.Calendar;
 public class Account {
 
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(strategy = "increment", name = "increment")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false)
     private String email;
-
-    @Column(name = "password")
-    private String password;
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "date_birthday")
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @Column(name = "date_create_account", nullable = false)
     @Temporal(value = TemporalType.TIMESTAMP)
-    private Calendar dateBirthday;
+    private Calendar dataCreate;
 
     public Account() {
     }
@@ -52,6 +55,14 @@ public class Account {
         this.email = email;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String username) {
+        this.name = username;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -60,19 +71,19 @@ public class Account {
         this.password = password;
     }
 
-    public String getName() {
-        return name;
+    public Role getRole() {
+        return role;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
-    public Calendar getDateBirthday() {
-        return dateBirthday;
+    public Calendar getDataCreate() {
+        return dataCreate;
     }
 
-    public void setDateBirthday(Calendar dateBirthday) {
-        this.dateBirthday = dateBirthday;
+    public void setDataCreate(Calendar dataCreate) {
+        this.dataCreate = dataCreate;
     }
 }

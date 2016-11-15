@@ -33,13 +33,15 @@ dependencies {
      * Libraries Spring
      * 1. Core
      * 2. Web MVC
-     * 3. Data JPA (Database)
-     * 4. Security Core
-     * 5. Security Web
-     * 6. Security Config
+     * 3. Spring ORMRM
+     * 4. Data JPA (Database)
+     * 5. Security Core
+     * 6. Security Web
+     * 7. Security Config
      */
     compile group: 'org.springframework', name: 'spring-core', version: '4.3.3.RELEASE'
     compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.3.RELEASE'
+    compile group: 'org.springframework', name: 'spring-orm', version: '4.3.3.RELEASE'
     compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '1.10.5.RELEASE'
     compile group: 'org.springframework.security', name: 'spring-security-core', version: '4.1.3.RELEASE'
     compile group: 'org.springframework.security', name: 'spring-security-web', version: '4.1.3.RELEASE'
@@ -49,9 +51,12 @@ dependencies {
      * Libraries for database
      * 1. JDBC PostgreSQL
      * 2. Apache Commons DBCP
-     * 3. Hibernate
+     * 3. Hibernate Core ORM
+     * 4. Hibernate EntityManager
      */
     compile group: 'org.postgresql', name: 'postgresql', version: '9.4.1211'
     compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.1.1'
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.4.Final'
     compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.2.4.Final'
+
 }

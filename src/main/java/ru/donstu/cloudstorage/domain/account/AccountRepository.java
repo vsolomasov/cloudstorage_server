@@ -7,4 +7,6 @@ import ru.donstu.cloudstorage.domain.account.entity.Account;
  * @author vyacheslafka
  */
 public interface AccountRepository extends JpaRepository<Account, Long> {
+
+    Account findByName(String name);
 }
