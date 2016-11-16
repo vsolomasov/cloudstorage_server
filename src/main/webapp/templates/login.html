@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.springframework.org/schema/data/jaxb"
-      layout:decorator="layout">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta th:include="/fragments/resources::head">
     <title>Авторизация</title>
@@ -11,16 +10,20 @@
     <div class="site-wrapper-inner">
         <div class="cover-container">
             <div th:include="fragments/header::body"></div>
-            <div class="width-auth center-block">
-                <form autocomplete="off" action="#" th:action="@{/j_spring_security_check}" method="post">
-                    <h2 class="text-center">Авторизация</h2>
-                    <input class="form-control input-lg vertical-margin" name="j_username" type="text" placeholder="Логин">
-                    <input class="form-control input-lg vertical-margin" name="j_password" type="password" placeholder="Пароль">
-                    <button class="btn btn-lg lg btn-primary btn-block">Войти</button>
-                    <div class="row vertical-margin">
-                        <a class="col-lg-12 text-right cursor-pointer" th:href="@{/recovery}">Забыли пароль?</a>
-                    </div>
-                </form>
+            <div sec:authorize="!isAuthenticated()">
+                <div class="width-auth center-block">
+                    <form autocomplete="off" action="#" th:action="@{/j_spring_security_check}" method="post">
+                        <h2 class="text-center">Авторизация</h2>
+                        <input class="form-control input-lg vertical-margin" name="j_username" type="text"
+                               placeholder="Логин">
+                        <input class="form-control input-lg vertical-margin" name="j_password" type="password"
+                               placeholder="Пароль">
+                        <button class="btn btn-lg lg btn-primary btn-block">Войти</button>
+                        <div class="row vertical-margin">
+                            <a class="col-lg-12 text-right cursor-pointer" th:href="@{/recovery}">Забыли пароль?</a>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div th:include="fragments/footer::body"></div>
         </div>

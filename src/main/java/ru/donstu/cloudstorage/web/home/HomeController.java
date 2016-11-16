@@ -1,20 +1,20 @@
-package ru.donstu.cloudstorage.web.info;
+package ru.donstu.cloudstorage.web.home;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * Контроллер информации
+ * Контроллер основной страницы
  *
  * @author v.solomasov
  */
 @Controller
-@RequestMapping("/info")
-public class InfoController {
+@RequestMapping("/home")
+public class HomeController {
 
     @RequestMapping(method = RequestMethod.GET)
-    public String infoPage(){
-        return "info";
+    public String homePage(){
+        return "home";
     }
 }

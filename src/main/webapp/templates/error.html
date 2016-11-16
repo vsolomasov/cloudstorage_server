@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta th:include="/fragments/resources::head">
+    <title>Ошибка</title>
+</head>
+<body>
+<div class="site-wrapper">
+    <div class="site-wrapper-inner">
+        <div class="cover-container">
+            <div class="inner cover">
+                <h1 class="cover-heading">Ошибка</h1>
+                <p class="lead">Страница не найдена</p>
+                <p class="lead">
+                    <a href="#" class="btn btn-lg btn-default">Вернуться на сайт</a>
+                </p>
+            </div>
+            <div th:include="fragments/footer::body"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
