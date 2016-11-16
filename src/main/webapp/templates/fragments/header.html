@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
 <body>
 <div class="masthead clearfix">
     <div class="inner">
         <h3 class="masthead-brand">CloudStorage</h3>
         <ul class="nav masthead-nav">
-            <li><a th:href="@{/info}">Инфо</a></li>
-            <li><a th:href="@{/login}">Войти</a></li>
-            <li><a th:href="@{/registration}">Регистрация</a></li>
+            <li th:classappend="(${#strings.contains(#httpServletRequest.requestURI, '/info')} ? 'active')"><a th:href="@{/info}">Инфо</a></li>
+            <li th:classappend="(${#strings.contains(#httpServletRequest.requestURI, '/login')} ? 'active')"><a th:href="@{/login}">Войти</a></li>
+            <li th:classappend="(${#strings.contains(#httpServletRequest.requestURI, '/registration')} ? 'active')"><a th:href="@{/registration}">Регистрация</a></li>
         </ul>
     </div>
 </div>
