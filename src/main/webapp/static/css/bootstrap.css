@@ -6756,6 +6756,10 @@ button.close {
 }
 /*# sourceMappingURL=bootstrap.css.map */
 
+.width-auth {
+  width: 400px !important;
+}
+
 .vertical-margin {
   margin-bottom: 10px;
   margin-top: 10px;

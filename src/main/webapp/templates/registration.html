@@ -1,26 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.springframework.org/schema/data/jaxb"
+      layout:decorator="layout">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{static/css/bootstrap.css}" />
-    <link rel="stylesheet" href="../static/css/cover.css" th:href="@{static/css/cover.css}" />
+    <meta th:include="/fragments/resources::head">
     <title>Регистрация</title>
 </head>
 <body>
-<div class="container site-wrapper width-auth" role="form" style="width: 400px">
-    <form autocomplete="off" action="#" th:action="@{/registration}" th:object="${accountForm}" method="post">
-        <h2 class="text-center">Регистрация</h2>
-        <input class="form-control input-lg vertical-margin" type="text" placeholder="Логин" th:field="*{name}">
-        <input class="form-control input-lg vertical-margin" type="email" placeholder="E-mail" th:field="*{email}">
-        <input class="form-control input-lg vertical-margin" type="password" placeholder="Пароль" th:field="*{password}">
-        <button class="btn btn-lg lg btn-primary btn-block">Зарегистрироваться</button>
-        <div class="row vertical-margin">
-            <a class="col-md-6 text-left cursor-pointer" th:href="@{/login}">Авторизоваться</a>
-            <a class="col-md-6 text-right cursor-pointer" th:href="@{/recovery}">Забыли пароль?</a>
+<div class="site-wrapper">
+    <div class="site-wrapper-inner">
+        <div class="cover-container">
+            <div th:include="fragments/header::body"></div>
+            <div class="width-auth center-block" role="form">
+                <form autocomplete="off" action="#" th:action="@{/registration}" th:object="${accountForm}" method="post">
+                    <h2 class="text-center">Регистрация</h2>
+                    <input class="form-control input-lg vertical-margin" type="text" placeholder="Логин" th:field="*{name}">
+                    <input class="form-control input-lg vertical-margin" type="email" placeholder="E-mail" th:field="*{email}">
+                    <input class="form-control input-lg vertical-margin" type="password" placeholder="Пароль" th:field="*{password}">
+                    <button class="btn btn-lg lg btn-primary btn-block">Зарегистрироваться</button>
+                    <div class="row vertical-margin">
+                        <a class="col-md-12 text-right cursor-pointer" th:href="@{/recovery}">Забыли пароль?</a>
+                    </div>
+                </form>
+            </div>
+            <div th:include="fragments/footer::body"></div>
         </div>
-    </form>
+    </div>
 </div>
 </body>
 </html>

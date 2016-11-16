@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.springframework.org/schema/data/jaxb"
+      layout:decorator="layout">
+<head>
+    <meta th:include="/fragments/resources::head">
+    <title>Облачное хранилище</title>
+</head>
+<body>
+<div class="site-wrapper">
+    <div class="site-wrapper-inner">
+        <div class="cover-container">
+            <div th:include="fragments/header::body"></div>
+            <div>Content!</div>
+            <div th:include="fragments/footer::body"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
