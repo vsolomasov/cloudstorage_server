@@ -1,13 +1,15 @@
 package ru.donstu.cloudstorage.service.security;
 
+import ru.donstu.cloudstorage.domain.account.entity.Account;
+
 /**
- * Класс сервисов для Security
+ * Класс сервисов безопасности
  *
  * @author v.solomasov
  */
 public interface SecurityService {
 
-    String findLoggedInUseremail();
+    boolean isLoggedUser();
 
-    void autoLogin(String email, String password);
+    Account getLoggedAccount();
 }

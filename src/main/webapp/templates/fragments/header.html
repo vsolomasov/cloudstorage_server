@@ -6,7 +6,7 @@
     <div class="inner">
         <h3 class="masthead-brand">CloudStorage</h3>
         <ul sec:authorize="!isAuthenticated()" class="nav masthead-nav">
-            <li th:classappend="(${#strings.contains(#httpServletRequest.requestURI, '/info')} ? 'active')"><a th:href="@{/info}">Инфо</a></li>
+            <li th:classappend="(${#strings.equals(#httpServletRequest.requestURI, '/')} ? 'active')"><a th:href="@{/}">Инфо</a></li>
             <li th:classappend="(${#strings.contains(#httpServletRequest.requestURI, '/registration')} ? 'active')"><a th:href="@{/registration}">Регистрация</a></li>
             <li th:classappend="(${#strings.contains(#httpServletRequest.requestURI, '/login')} ? 'active')"><a th:href="@{/login}">Войти</a></li>
         </ul>

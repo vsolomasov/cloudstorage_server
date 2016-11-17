@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author v.solomasov
  */
 @Controller
-@RequestMapping("/info")
+@RequestMapping("/")
 public class InfoController {
 
     @RequestMapping(method = RequestMethod.GET)

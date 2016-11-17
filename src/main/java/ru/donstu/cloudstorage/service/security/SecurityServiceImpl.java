@@ -1,43 +1,41 @@
 package ru.donstu.cloudstorage.service.security;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import ru.donstu.cloudstorage.service.userdetails.CustomUserDetailsService;
+import ru.donstu.cloudstorage.domain.account.entity.Account;
+import ru.donstu.cloudstorage.domain.account.enums.Role;
+import ru.donstu.cloudstorage.service.account.AccountService;
 
 
 /**
+ * Реализация интерфейса {@link SecurityService}
+ *
  * @author v.solomasov
  */
 @Service
 public class SecurityServiceImpl implements SecurityService {
 
     @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
+    private AccountService accountService;
 
     @Override
-    public String findLoggedInUseremail() {
-        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
-        if (userDetails instanceof UserDetails){
-            return ((UserDetails) userDetails).getUsername();
+    public boolean isLoggedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            return false;
         }
-        return null;
+        return authentication.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals(Role.ROLE_USER));
     }
 
     @Override
-    public void autoLogin(String email, String password) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
-        authenticationManager.authenticate(authenticationToken);
-        if (authenticationToken.isAuthenticated()) {
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+    public Account getLoggedAccount() {
+        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (userDetails instanceof UserDetails) {
+            return accountService.findAccountByName(((UserDetails) userDetails).getUsername());
         }
+        return null;
     }
 }
