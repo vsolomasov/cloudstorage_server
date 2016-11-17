@@ -25,11 +25,9 @@ dependencies {
      * Thymeleaf
      * 1. Core
      * 2. Integrated in the Spring
-     * 3. Thymeleaf Dialect for Spring
      */
     compile group: 'org.thymeleaf', name: 'thymeleaf', version: '3.0.2.RELEASE'
     compile group: 'org.thymeleaf', name: 'thymeleaf-spring4', version: '3.0.2.RELEASE'
-    compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '3.0.0.RELEASE'
 
     /**
      * Libraries Spring

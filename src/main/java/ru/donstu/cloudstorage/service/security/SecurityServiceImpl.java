@@ -23,19 +23,19 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Override
     public boolean isLoggedUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null) {
-            return false;
-        }
-        return authentication.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals(Role.ROLE_USER));
+        return getAuthentication().getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals(Role.ROLE_USER.name()));
     }
 
     @Override
     public Account getLoggedAccount() {
-        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object userDetails = getAuthentication().getPrincipal();
         if (userDetails instanceof UserDetails) {
             return accountService.findAccountByName(((UserDetails) userDetails).getUsername());
         }
         return null;
+    }
+
+    private Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 }

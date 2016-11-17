@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
 <div class="masthead clearfix">
     <div class="inner">
         <h3 class="masthead-brand">CloudStorage</h3>
-        <ul sec:authorize="!isAuthenticated()" class="nav masthead-nav">
+        <ul th:if="${!isLogged}" class="nav masthead-nav">
             <li th:classappend="(${#strings.equals(#httpServletRequest.requestURI, '/')} ? 'active')"><a th:href="@{/}">Инфо</a></li>
             <li th:classappend="(${#strings.contains(#httpServletRequest.requestURI, '/registration')} ? 'active')"><a th:href="@{/registration}">Регистрация</a></li>
             <li th:classappend="(${#strings.contains(#httpServletRequest.requestURI, '/login')} ? 'active')"><a th:href="@{/login}">Войти</a></li>
         </ul>
-        <ul sec:authorize="isAuthenticated()" class="nav masthead-nav">
-            <li th:classappend="(${#strings.contains(#httpServletRequest.requestURI, '/home')} ? 'active')"><a th:href="@{/home}">Облако</a></li>
+        <ul th:if="${isLogged}" class="nav masthead-nav">
+            <li th:classappend="(${#strings.contains(#httpServletRequest.requestURI, '/cloud')} ? 'active')"><a th:href="@{/cloud}">Облако</a></li>
             <li th:classappend="(${#strings.contains(#httpServletRequest.requestURI, '/settings')} ? 'active')"><a th:href="@{/settings}">Настройки</a></li>
             <li><a th:href="@{/logout}">Выйти</a></li>
         </ul>

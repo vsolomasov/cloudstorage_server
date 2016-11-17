@@ -1,4 +1,4 @@
-package ru.donstu.cloudstorage.web.home;
+package ru.donstu.cloudstorage.web.cloud;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,15 +13,16 @@ import ru.donstu.cloudstorage.service.security.SecurityService;
  * @author v.solomasov
  */
 @Controller
-@RequestMapping("/home")
-public class HomeController {
+@RequestMapping("/cloud")
+public class CloudController {
 
     @Autowired
     private SecurityService securityService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String homePage(Model model){
+    public String homePage(Model model) {
+        model.addAttribute("isLogged", securityService.isLoggedUser());
         model.addAttribute("name", securityService.getLoggedAccount().getName());
-        return "home";
+        return "cloud";
     }
 }

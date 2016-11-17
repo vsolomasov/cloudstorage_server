@@ -8,7 +8,8 @@ package ru.donstu.cloudstorage.domain.account.enums;
 public enum Role {
 
     ROLE_ADMIN("ADMIN"),
-    ROLE_USER("USER");
+    ROLE_USER("USER"),
+    ROLE_ANONYMOUS("ANONYMOUS");
 
     private final String name;
 
