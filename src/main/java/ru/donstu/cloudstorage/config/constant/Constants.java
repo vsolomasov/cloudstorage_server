@@ -22,6 +22,8 @@ public class Constants {
 
     public static final String RESOURCES_PROPERTY = "classpath:application.properties";
 
+    public static final String MESSAGE_PROPERTY = "classpath:message.properties";
+
     public static final String PATH_TEMPLATES = "/templates/";
 
     public static final String CHARACTER_ENCODING = "UTF-8";

@@ -43,10 +43,13 @@ public class RegistrationController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String registartionForm(@ModelAttribute("accountForm") Account accountForm,
-                                   BindingResult bindingResult) {
+                                   BindingResult bindingResult,
+                                   Model model) {
         accountValidator.validate(accountForm, bindingResult);
         if (bindingResult.hasErrors()) {
-            return "redirect:/registration";
+            model.addAttribute("isLogged", securityService.isLoggedUser());
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "registration";
         }
         accountService.saveAccount(accountForm);
         return "redirect:/login";
