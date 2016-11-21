@@ -7,7 +7,12 @@
 <body>
 <div th:include="fragments/header::body"></div>
 
-<div class="custom-container">Cloud!</div>
+<div class="custom-container">
+    <form method="POST" action="/cloud/save" enctype="multipart/form-data">
+        <input type="file" id="mfile" name="file">
+        <button class="btn btn-lg btn-primary">Загрузить</button>
+    </form>
+</div>
 
 <div class="custom-container">
     <div th:include="fragments/footer::body"></div>

@@ -16,7 +16,7 @@ import ru.donstu.cloudstorage.service.account.AccountService;
  * @author v.solomasov
  */
 @Component
-public class UserValidator implements Validator {
+public class AccountValidator implements Validator {
 
     @Autowired
     private AccountService accountService;

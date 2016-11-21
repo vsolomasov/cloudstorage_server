@@ -10,30 +10,32 @@ import org.springframework.stereotype.Component;
 @Component
 public class Constants {
 
-    public final static String DISPATCHER = "dispatcher";
+    public static final String DISPATCHER = "dispatcher";
 
-    public final static String SERVLET_MAPPING = "/";
+    public static final String SERVLET_MAPPING = "/";
 
-    public final static String PACKAGE_PROJECT = "ru.donstu.cloudstorage";
+    public static final String PACKAGE_PROJECT = "ru.donstu.cloudstorage";
 
-    public final static String PACKAGE_ENTITY = PACKAGE_PROJECT + ".domain";
+    public static final String PACKAGE_ENTITY = PACKAGE_PROJECT + ".domain";
 
-    public final static String PACKAGE_CONFIG = PACKAGE_PROJECT + ".config";
+    public static final String PACKAGE_CONFIG = PACKAGE_PROJECT + ".config";
 
-    public final static String RESOURCES_PROPERTY = "classpath:application.properties";
+    public static final String RESOURCES_PROPERTY = "classpath:application.properties";
 
-    public final static String PATH_TEMPLATES = "/templates/";
+    public static final String PATH_TEMPLATES = "/templates/";
 
-    public final static String CHARACTER_ENCODING = "UTF-8";
+    public static final String CHARACTER_ENCODING = "UTF-8";
 
-    public final static String SUFFIX_TEMPLATES = ".html";
+    public static final String SUFFIX_TEMPLATES = ".html";
 
-    public final static String CSS_LOCATION = "/static/css/";
-    public final static String CSS_HANDLER = CSS_LOCATION + "**";
+    public static final String CSS_LOCATION = "/static/css/";
+    public static final String CSS_HANDLER = CSS_LOCATION + "**";
 
-    public final static String JS_LOCATION = "/static/js/";
-    public final static String JS_HANDLER = JS_LOCATION + "**";
+    public static final String JS_LOCATION = "/static/js/";
+    public static final String JS_HANDLER = JS_LOCATION + "**";
 
-    public final static String IMG_LOCATION = "/static/img/";
-    public final static String IMG_HANDLER = IMG_LOCATION + "**";
+    public static final String IMG_LOCATION = "/static/img/";
+    public static final String IMG_HANDLER = IMG_LOCATION + "**";
+
+    public static final Long MAX_UPLOAD_SIZE = 100000L;
 }

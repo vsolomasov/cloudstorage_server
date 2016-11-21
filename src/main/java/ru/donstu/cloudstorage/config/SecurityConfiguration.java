@@ -27,6 +27,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
+
+        //TODO enable CSRF (problem upload file)
+        http.csrf().disable();
+
         http
                 .authorizeRequests()
                     .antMatchers("/registration", "/").permitAll()

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ru.donstu.cloudstorage.domain.account.entity.Account;
 import ru.donstu.cloudstorage.service.account.AccountService;
 import ru.donstu.cloudstorage.service.security.SecurityService;
-import ru.donstu.cloudstorage.validator.UserValidator;
+import ru.donstu.cloudstorage.validator.AccountValidator;
 
 /**
  * Контроллер регистрации
@@ -25,7 +25,7 @@ public class RegistrationController {
     private SecurityService securityService;
 
     @Autowired
-    private UserValidator userValidator;
+    private AccountValidator accountValidator;
 
     @Autowired
     private AccountService accountService;
@@ -43,9 +43,8 @@ public class RegistrationController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String registartionForm(@ModelAttribute("accountForm") Account accountForm,
-                                   BindingResult bindingResult,
-                                   Model model) {
-        userValidator.validate(accountForm, bindingResult);
+                                   BindingResult bindingResult) {
+        accountValidator.validate(accountForm, bindingResult);
         if (bindingResult.hasErrors()) {
             return "redirect:/registration";
         }
