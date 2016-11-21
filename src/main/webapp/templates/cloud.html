@@ -5,13 +5,12 @@
     <title>Облако</title>
 </head>
 <body>
-<div class="site-wrapper">
-    <div class="site-wrapper-inner">
-        <div class="cover-container">
-            <div th:include="fragments/header::body"></div>
-            Страница пользователя: <span th:text="${name}"></span>
-        </div>
-    </div>
+<div th:include="fragments/header::body"></div>
+
+<div class="custom-container">Cloud!</div>
+
+<div class="custom-container">
+    <div th:include="fragments/footer::body"></div>
 </div>
 </body>
 </html>

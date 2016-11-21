@@ -66,5 +66,6 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter implements Appl
         super.addResourceHandlers(registry);
         registry.addResourceHandler(CSS_HANDLER).addResourceLocations(CSS_LOCATION);
         registry.addResourceHandler(JS_HANDLER).addResourceLocations(JS_LOCATION);
+        registry.addResourceHandler(IMG_HANDLER).addResourceLocations(IMG_LOCATION);
     }
 }

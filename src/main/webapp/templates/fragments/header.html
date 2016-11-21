@@ -2,18 +2,20 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
 <div class="masthead clearfix">
-    <div class="inner">
-        <h3 class="masthead-brand">CloudStorage</h3>
-        <ul th:if="${!isLogged}" class="nav masthead-nav">
-            <li th:classappend="(${#strings.equals(#httpServletRequest.requestURI, '/')} ? 'active')"><a th:href="@{/}">Инфо</a></li>
-            <li th:classappend="(${#strings.contains(#httpServletRequest.requestURI, '/registration')} ? 'active')"><a th:href="@{/registration}">Регистрация</a></li>
-            <li th:classappend="(${#strings.contains(#httpServletRequest.requestURI, '/login')} ? 'active')"><a th:href="@{/login}">Войти</a></li>
-        </ul>
-        <ul th:if="${isLogged}" class="nav masthead-nav">
-            <li th:classappend="(${#strings.contains(#httpServletRequest.requestURI, '/cloud')} ? 'active')"><a th:href="@{/cloud}">Облако</a></li>
-            <li th:classappend="(${#strings.contains(#httpServletRequest.requestURI, '/settings')} ? 'active')"><a th:href="@{/settings}">Настройки</a></li>
-            <li><a th:href="@{/logout}">Выйти</a></li>
-        </ul>
+    <div class="custom-container">
+        <div class="navbar edit-padding">
+            <h3 class="navbar-brand"><img src="../../static/img/server.svg" th:src="@{static/img/server.svg}"> CloudStorage</h3>
+            <nav class="custom-nav" th:if="${!isLogged}">
+                <a class="nav-link" th:classappend="(${#strings.equals(#httpServletRequest.requestURI, '/')} ? 'active')" th:href="@{/}">Инфо</a>
+                <a class="nav-link" th:classappend="(${#strings.contains(#httpServletRequest.requestURI, '/registration')} ? 'active')" th:href="@{/registration}">Регистрация</a>
+                <a class="nav-link" th:classappend="(${#strings.contains(#httpServletRequest.requestURI, '/login')} ? 'active')" th:href="@{/login}">Войти</a>
+            </nav>
+            <nav class="custom-nav" th:if="${isLogged}">
+                <a class="nav-link" th:classappend="(${#strings.contains(#httpServletRequest.requestURI, '/cloud')} ? 'active')" th:href="@{/cloud}">Облако</a>
+                <a class="nav-link" th:classappend="(${#strings.contains(#httpServletRequest.requestURI, '/settings')} ? 'active')" th:href="@{/settings}">Настройки</a>
+                <a class="nav-link" th:href="@{/logout}">Выйти</a>
+            </nav>
+        </div>
     </div>
 </div>
 </body>

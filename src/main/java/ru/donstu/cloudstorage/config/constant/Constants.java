@@ -33,4 +33,7 @@ public class Constants {
 
     public final static String JS_LOCATION = "/static/js/";
     public final static String JS_HANDLER = JS_LOCATION + "**";
+
+    public final static String IMG_LOCATION = "/static/img/";
+    public final static String IMG_HANDLER = IMG_LOCATION + "**";
 }
