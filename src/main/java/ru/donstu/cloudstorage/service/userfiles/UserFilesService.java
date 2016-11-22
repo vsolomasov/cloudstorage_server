@@ -10,5 +10,11 @@ import ru.donstu.cloudstorage.domain.account.entity.Account;
  */
 public interface UserFilesService {
 
+    /**
+     * Загрузка файла на сервер
+     *
+     * @param account
+     * @param file
+     */
     void uploadFile(Account account, MultipartFile file);
 }
