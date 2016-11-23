@@ -8,8 +8,15 @@
 <div th:include="fragments/header::body"></div>
 
 <div class="custom-container">
+
+    <th:block class="custom-container-form" th:if="${errors}">
+        <div class="text-lg-center">
+            <span>Ошибка загрузки файла</span>
+        </div>
+    </th:block>
+
     <form class="form-inline row mb-1 ml-1" method="POST" action="/cloud/save" enctype="multipart/form-data">
-        <input class="offset-lg-2" type="file" id="mfile" name="file">
+        <input class="offset-lg-2 required" type="file" id="mfile" name="file">
         <div class="col-lg-1"></div>
         <button class="btn btn-sm btn-custom"><img th:src="@{static/img/arrow-up.svg}"> Загрузить</button>
     </form>
@@ -20,14 +27,14 @@
             <th>Алгоритм</th>
             <th></th>
         </tr>
-        <tr>
-            <td>Test.test</td>
-            <td>100Мб</td>
+        <tr th:each="file : ${userFiles}">
+            <td th:text="${file.fileName}"></td>
+            <td th:text="${file.fileLength}"></td>
             <td>AES</td>
             <td class="text-lg-right">
                 <div class="btn-group">
-                    <button class="btn btn-sm btn-custom" type="button"><img th:src="@{static/img/arrow-down.svg}"></button>
-                    <button class="btn btn-sm btn-custom" type="button"><img th:src="@{static/img/remove.svg}"></button>
+                    <a th:href="'/cloud/download/' + ${file.id}"><button class="btn btn-sm btn-custom" type="button"><img th:src="@{static/img/arrow-down.svg}"></button></a>
+                    <a th:href="'/cloud/delete/' + ${file.id}"><button class="btn btn-sm btn-custom" type="button"><img th:src="@{static/img/remove.svg}"></button></a>
                 </div>
             </td>
         </tr>

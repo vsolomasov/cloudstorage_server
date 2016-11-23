@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 import static ru.donstu.cloudstorage.config.constant.Constants.MESSAGE_PROPERTY;
 
 /**
- * Валидатор для {@link org.springframework.security.core.userdetails.User}
+ * Валидатор {@link org.springframework.security.core.userdetails.User}
  * реализует интерфейс {@link Validator}
  *
  * @author v.solomasov
@@ -46,11 +46,11 @@ public class AccountValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", environment.getRequiredProperty("validator.email.empty"));
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", environment.getRequiredProperty("validator.password.empty"));
 
-        if (!checkRegEx(account.getName(), PATTERN_LOGIN)){
+        if (!checkRegEx(account.getName(), PATTERN_LOGIN)) {
             errors.reject(environment.getRequiredProperty("validator.login.reg"));
         }
 
-        if(!account.getEmail().contains(CHAR_EMAIL)) {
+        if (!account.getEmail().contains(CHAR_EMAIL)) {
             errors.reject(environment.getRequiredProperty("validator.email.reg"));
         }
 
@@ -58,11 +58,18 @@ public class AccountValidator implements Validator {
             errors.reject(environment.getRequiredProperty("validator.password.reg"));
         }
 
-        if(!account.getPassword().equals(account.getConfirmPassword())) {
+        if (!account.getPassword().equals(account.getConfirmPassword())) {
             errors.reject(environment.getRequiredProperty("validator.password.not_equals"));
         }
     }
 
+    /**
+     * Проверка регулярных выражений
+     *
+     * @param word
+     * @param pattern
+     * @return
+     */
     private boolean checkRegEx(String word, String pattern) {
         return Pattern.compile(pattern).matcher(word).matches();
     }

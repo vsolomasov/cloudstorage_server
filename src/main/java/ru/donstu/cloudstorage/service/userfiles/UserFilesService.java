@@ -2,6 +2,9 @@ package ru.donstu.cloudstorage.service.userfiles;
 
 import org.springframework.web.multipart.MultipartFile;
 import ru.donstu.cloudstorage.domain.account.entity.Account;
+import ru.donstu.cloudstorage.domain.userfiles.entity.UserFiles;
+
+import java.util.List;
 
 /**
  * Класс сервиса для работы с файлами пользователей
@@ -17,4 +20,29 @@ public interface UserFilesService {
      * @param file
      */
     void uploadFile(Account account, MultipartFile file);
+
+    /**
+     * Поиск всех файлов аккаунта
+     *
+     * @param account
+     * @return
+     */
+    List<UserFiles> findUserFilesByAccount(Account account);
+
+    /**
+     * Проверка файла пользователя на совпадение
+     *
+     * @param account
+     * @param fileName
+     * @return
+     */
+    boolean checkUserFile(Account account, String fileName);
+
+    /**
+     * Удаление файла
+     *
+     * @param id
+     * @param account
+     */
+    void deleteFile(Long id, Account account);
 }

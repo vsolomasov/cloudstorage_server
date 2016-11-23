@@ -27,6 +27,12 @@ public class UserFiles {
     @Column(name = "file_name", nullable = false)
     private String fileName;
 
+    @Column(name = "file_length", nullable = false)
+    private Long fileLength;
+
+    @Column(name = "file_path", nullable = false)
+    private String filePath;
+
     @Column(name = "date_upload", nullable = false)
     @Temporal(value = TemporalType.TIMESTAMP)
     private Calendar dateUpload;
@@ -56,6 +62,22 @@ public class UserFiles {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public Long getFileLength() {
+        return fileLength;
+    }
+
+    public void setFileLength(Long fileLength) {
+        this.fileLength = fileLength;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 
     public Calendar getDateUpload() {
