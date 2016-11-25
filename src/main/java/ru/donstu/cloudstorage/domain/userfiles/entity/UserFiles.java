@@ -3,6 +3,7 @@ package ru.donstu.cloudstorage.domain.userfiles.entity;
 import ru.donstu.cloudstorage.domain.account.entity.Account;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Calendar;
 
 /**
@@ -29,6 +30,9 @@ public class UserFiles {
 
     @Column(name = "file_length", nullable = false)
     private Long fileLength;
+
+    @Column(name = "file_length_show", nullable = false)
+    private BigDecimal fileLengthShow;
 
     @Column(name = "file_path", nullable = false)
     private String filePath;
@@ -70,6 +74,14 @@ public class UserFiles {
 
     public void setFileLength(Long fileLength) {
         this.fileLength = fileLength;
+    }
+
+    public BigDecimal getFileLengthShow() {
+        return fileLengthShow;
+    }
+
+    public void setFileLengthShow(BigDecimal fileLengthShow) {
+        this.fileLengthShow = fileLengthShow;
     }
 
     public String getFilePath() {

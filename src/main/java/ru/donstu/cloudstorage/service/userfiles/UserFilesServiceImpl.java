@@ -12,6 +12,8 @@ import ru.donstu.cloudstorage.domain.userfiles.entity.UserFiles;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.List;
 
@@ -33,6 +35,10 @@ public class UserFilesServiceImpl implements UserFilesService {
     private static final String MIME_TYPE = "application/octet-stream";
 
     private static final String HEADER_TYPE = "Content-Disposition";
+
+    private static final int DIVIDE_MEGABYTE = 1000000;
+
+    private static final int POINT_OFFSET = 2;
 
     @Autowired
     private UserFilesRepository filesRepository;
@@ -161,6 +167,7 @@ public class UserFilesServiceImpl implements UserFilesService {
         userFiles.setAccount(account);
         userFiles.setFileName(fileName);
         userFiles.setFileLength(size);
+        userFiles.setFileLengthShow(new BigDecimal(size).divide(new BigDecimal(DIVIDE_MEGABYTE), POINT_OFFSET, RoundingMode.CEILING));
         userFiles.setFilePath(path);
         userFiles.setDateUpload(Calendar.getInstance());
         filesRepository.save(userFiles);

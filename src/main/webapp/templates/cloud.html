@@ -29,7 +29,7 @@
         </tr>
         <tr th:each="file : ${userFiles}">
             <td th:text="${file.fileName}"></td>
-            <td th:text="${file.fileLength}"></td>
+            <td th:text="${file.fileLengthShow} + 'Мб'"></td>
             <td>AES</td>
             <td class="text-lg-right">
                 <div class="btn-group">
