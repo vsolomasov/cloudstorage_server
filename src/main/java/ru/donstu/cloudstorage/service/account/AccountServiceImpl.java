@@ -31,4 +31,13 @@ public class AccountServiceImpl implements AccountService {
         Account account = accountRepository.findByName(name);
         return account;
     }
+
+    @Override
+    public boolean checkAccountName(String name) {
+        Account account = accountRepository.findByName(name);
+        if (account == null) {
+            return false;
+        }
+        return true;
+    }
 }

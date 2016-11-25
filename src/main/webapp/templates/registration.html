@@ -13,11 +13,10 @@
 </th:block>
 <div class="custom-container-form">
     <form autocomplete="off" action="#" th:action="@{/registration}" th:object="${accountForm}" method="post">
-        <input class="form-control-lg form-control mb-1" type="text" placeholder="Логин" th:field="*{name}">
-        <input class="form-control-lg form-control mb-1" type="email" placeholder="E-mail" th:field="*{email}">
-        <input class="form-control-lg form-control mb-1" type="datetime" placeholder="Дата рождения">
-        <input class="form-control-lg form-control mb-1" type="password" placeholder="Пароль" th:field="*{password}">
-        <input class="form-control-lg form-control mb-1" type="password" placeholder="Повторите пароль" th:field="*{confirmPassword}">
+        <input class="form-control-lg form-control mb-1" type="text" placeholder="Логин" required="required" th:field="*{name}">
+        <input class="form-control-lg form-control mb-1" type="email" placeholder="E-mail" required="required" th:field="*{email}">
+        <input class="form-control-lg form-control mb-1" type="password" required="required" placeholder="Пароль" th:field="*{password}">
+        <input class="form-control-lg form-control mb-1" type="password" required="required" placeholder="Повторите пароль" th:field="*{confirmPassword}">
         <button class="btn btn-lg btn-block btn-primary">Зарегистрироваться</button>
         <div class="row">
             <div class="col-lg-12 text-lg-right"><a th:href="@{/recovery}">Забыли пароль?</a></div>

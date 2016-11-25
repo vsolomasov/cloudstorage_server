@@ -9,6 +9,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import ru.donstu.cloudstorage.domain.account.entity.Account;
+import ru.donstu.cloudstorage.service.account.AccountService;
 
 import java.util.regex.Pattern;
 
@@ -26,6 +27,9 @@ public class AccountValidator implements Validator {
 
     @Autowired
     private Environment environment;
+
+    @Autowired
+    private AccountService accountService;
 
     private static final String PATTERN_PASSWORD = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,50}$";
 
@@ -45,6 +49,10 @@ public class AccountValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", environment.getRequiredProperty("validator.login.empty"));
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", environment.getRequiredProperty("validator.email.empty"));
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", environment.getRequiredProperty("validator.password.empty"));
+
+        if (accountService.checkAccountName(account.getName())) {
+            errors.reject(environment.getRequiredProperty("validator.login.same"));
+        }
 
         if (!checkRegEx(account.getName(), PATTERN_LOGIN)) {
             errors.reject(environment.getRequiredProperty("validator.login.reg"));
