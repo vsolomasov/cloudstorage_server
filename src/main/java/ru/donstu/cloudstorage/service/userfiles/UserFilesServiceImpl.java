@@ -82,7 +82,7 @@ public class UserFilesServiceImpl implements UserFilesService {
             try {
                 filesRepository.delete(id);
                 deleteFileFromDisk(userFiles.getFilePath(), userFiles.getFileName());
-                logger.info(String.format("Файл с id=%d, удален пользователем, %s", id, account.getName()));
+                logger.info(String.format("Файл id=%d, удален пользователем, %s", id, account.getName()));
             } catch (FileNotFoundException e) {
                 logger.info(String.format("Файл %s не найден на диске, но удален из БД", userFiles.getFileName()));
             }

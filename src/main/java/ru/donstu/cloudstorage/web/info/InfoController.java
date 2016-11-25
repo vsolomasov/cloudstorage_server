@@ -21,7 +21,11 @@ public class InfoController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String infoPage(Model model) {
-        model.addAttribute("isLogged", securityService.isLoggedUser());
+        boolean isLogged = securityService.isLoggedUser();
+        if (isLogged) {
+            return "redirect:/cloud";
+        }
+        model.addAttribute("isLogged", isLogged);
         return "info";
     }
 }
