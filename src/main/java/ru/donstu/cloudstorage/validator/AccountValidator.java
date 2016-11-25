@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 import static ru.donstu.cloudstorage.config.constant.Constants.MESSAGE_PROPERTY;
 
 /**
- * Валидатор {@link org.springframework.security.core.userdetails.User}
+ * Валидация {@link org.springframework.security.core.userdetails.User}
  * реализует интерфейс {@link Validator}
  *
  * @author v.solomasov

@@ -12,8 +12,8 @@ import ru.donstu.cloudstorage.domain.account.entity.Account;
 import ru.donstu.cloudstorage.service.security.SecurityService;
 import ru.donstu.cloudstorage.service.userfiles.UserFilesService;
 import ru.donstu.cloudstorage.validator.FileValidator;
-
 import javax.servlet.http.HttpServletResponse;
+
 
 /**
  * Контроллер основной страницы
