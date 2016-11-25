@@ -39,5 +39,5 @@ public class Constants {
     public static final String IMG_LOCATION = "/static/img/";
     public static final String IMG_HANDLER = IMG_LOCATION + "**";
 
-    public static final Long MAX_UPLOAD_SIZE = 100000L;
+    public static final Long MAX_UPLOAD_SIZE = 25000000L;
 }

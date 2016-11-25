@@ -13,6 +13,8 @@ import ru.donstu.cloudstorage.service.security.SecurityService;
 import ru.donstu.cloudstorage.service.userfiles.UserFilesService;
 import ru.donstu.cloudstorage.validator.FileValidator;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Контроллер основной страницы
  *
@@ -57,5 +59,11 @@ public class CloudController {
     public String deleteUserFile(@PathVariable("id") Long id) {
         filesService.deleteFile(id, securityService.getLoggedAccount());
         return "redirect:/cloud";
+    }
+
+    @RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
+    public void downloadUserFIle(@PathVariable("id") Long id,
+                                 HttpServletResponse response) {
+        filesService.downloadFile(id, securityService.getLoggedAccount(), response);
     }
 }

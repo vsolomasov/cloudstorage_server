@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.donstu.cloudstorage.domain.account.entity.Account;
 import ru.donstu.cloudstorage.domain.userfiles.entity.UserFiles;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -45,4 +46,13 @@ public interface UserFilesService {
      * @param account
      */
     void deleteFile(Long id, Account account);
+
+    /**
+     * Скачивание файла c сервера
+     *
+     * @param id
+     * @param account
+     * @param response
+     */
+    void downloadFile(Long id, Account account, HttpServletResponse response);
 }

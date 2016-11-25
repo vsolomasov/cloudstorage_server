@@ -10,6 +10,7 @@ import ru.donstu.cloudstorage.domain.account.entity.Account;
 import ru.donstu.cloudstorage.domain.userfiles.UserFilesRepository;
 import ru.donstu.cloudstorage.domain.userfiles.entity.UserFiles;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.Calendar;
 import java.util.List;
@@ -28,6 +29,10 @@ public class UserFilesServiceImpl implements UserFilesService {
     private static final Logger logger = Logger.getLogger(UserFilesServiceImpl.class);
 
     private static final String SEPARATOR = File.separator;
+
+    private static final String MIME_TYPE = "application/octet-stream";
+
+    private static final String HEADER_TYPE = "Content-Disposition";
 
     @Autowired
     private UserFilesRepository filesRepository;
@@ -75,8 +80,38 @@ public class UserFilesServiceImpl implements UserFilesService {
             } catch (FileNotFoundException e) {
                 logger.info(String.format("Файл %s не найден на диске, но удален из БД", userFiles.getFileName()));
             }
+        }
+        else {
+            logger.info(String.format("Пользователь %s пытался манипуляровать с файлом id=%d, которого не существует или принадлежит не ему", account.getName(), id));
+        }
+    }
+
+    @Override
+    public void downloadFile(Long id, Account account, HttpServletResponse response) {
+        UserFiles userFiles = filesRepository.findByIdAndAccount(id, account);
+        if (userFiles != null) {
+            try {
+                File file = new File(userFiles.getFilePath() + SEPARATOR + userFiles.getFileName());
+                InputStream inputStream = new FileInputStream(file);
+                String valueHeader = String.format("attachment; filename=%s", file.getName());
+                response.setContentType(MIME_TYPE);
+                response.setHeader(HEADER_TYPE, valueHeader);
+                OutputStream outputStream = response.getOutputStream();
+                byte[] buffer = new byte[1024];
+                int len;
+                while ((len = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, len);
+                }
+                outputStream.flush();
+                outputStream.close();
+                inputStream.close();
+            } catch (FileNotFoundException e) {
+                logger.info(String.format("Файл %s не найден на диске", userFiles.getFileName()));
+            } catch (IOException e) {
+                logger.info(String.format("Ошибка загрузки файла %s", userFiles.getFileName()));
+            }
         } else {
-            logger.info(String.format("Пользователь %s пытался удалить файл с id=%d, которого не существует или принадлежит не ему", account.getName(), id));
+            logger.info(String.format("Пользователь %s пытался манипуляровать с файлом id=%d, которого не существует или принадлежит не ему", account.getName(), id));
         }
     }
 
