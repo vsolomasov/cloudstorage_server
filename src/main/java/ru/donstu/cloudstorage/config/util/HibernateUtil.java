@@ -17,7 +17,7 @@ public class HibernateUtil {
     @Autowired
     private Environment environment;
 
-    public Properties getJpaProperties(){
+    public Properties getJpaProperties() {
         return addProperties();
     }
 

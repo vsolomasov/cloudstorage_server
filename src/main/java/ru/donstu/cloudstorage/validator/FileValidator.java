@@ -1,13 +1,10 @@
 package ru.donstu.cloudstorage.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import ru.donstu.cloudstorage.service.security.SecurityService;
 import ru.donstu.cloudstorage.service.userfiles.UserFilesService;
-
-import static ru.donstu.cloudstorage.config.constant.Constants.MESSAGE_PROPERTY;
 
 /**
  * Валидация {@link org.springframework.web.multipart.MultipartFile}

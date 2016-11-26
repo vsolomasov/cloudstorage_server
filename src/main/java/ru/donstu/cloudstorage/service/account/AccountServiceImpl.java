@@ -6,8 +6,11 @@ import org.springframework.stereotype.Service;
 import ru.donstu.cloudstorage.domain.account.AccountRepository;
 import ru.donstu.cloudstorage.domain.account.entity.Account;
 import ru.donstu.cloudstorage.domain.account.enums.Role;
+import ru.donstu.cloudstorage.domain.userfiles.entity.UserFiles;
+import ru.donstu.cloudstorage.service.userfiles.UserFilesService;
 
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Реализация интерфейса {@link AccountService}
@@ -21,6 +24,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private UserFilesService filesService;
 
     @Override
     public void saveAccount(Account account) {
@@ -50,6 +56,20 @@ public class AccountServiceImpl implements AccountService {
         account.setPassword(newPassword);
         account.setConfirmPassword(confirmPassword);
         accountRepository.save(account);
+    }
+
+    @Override
+    public boolean deleteAccount(Account account, Long id) {
+        if (account.getId() != id) {
+            logger.info(String.format("Пользователь id=%d пытался удалить пользователя id=%d", account.getId(), id));
+            return false;
+        }
+        List<UserFiles> files = filesService.findUserFilesByAccount(account);
+        files.stream().forEach(file -> filesService.deleteFile(file.getId(), account));
+        filesService.deleteFolder(account.getId());
+        logger.info(String.format("Пользователь %s удален", id));
+        accountRepository.delete(account);
+        return true;
     }
 
     @Override

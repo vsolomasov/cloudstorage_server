@@ -4,7 +4,6 @@ import ru.donstu.cloudstorage.domain.account.enums.Role;
 
 import javax.persistence.*;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Аккаунты

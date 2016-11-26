@@ -1,16 +1,15 @@
 package ru.donstu.cloudstorage.web.setting;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.donstu.cloudstorage.domain.account.entity.Account;
 import ru.donstu.cloudstorage.service.account.AccountService;
 import ru.donstu.cloudstorage.service.security.SecurityService;
-import ru.donstu.cloudstorage.validator.AccountValidator;
 import ru.donstu.cloudstorage.validator.EmailValidator;
 import ru.donstu.cloudstorage.validator.PasswordValidator;
 
@@ -79,5 +78,13 @@ public class SettingsController {
         }
         accountService.updateAccountPassword(account, newPassword, confirmPassword);
         return "redirect:/cloud";
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public String settingsDelete(@PathVariable("id") Long id) {
+        if (!accountService.deleteAccount(securityService.getLoggedAccount(), id)) {
+            return "redirect:/cloud";
+        }
+        return "redirect:/logout";
     }
 }

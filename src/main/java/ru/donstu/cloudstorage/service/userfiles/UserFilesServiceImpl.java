@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.donstu.cloudstorage.domain.account.entity.Account;
@@ -88,6 +89,17 @@ public class UserFilesServiceImpl implements UserFilesService {
             }
         } else {
             logger.info(String.format("Пользователь %s пытался манипуляровать с файлом id=%d, которого не существует или принадлежит не ему", account.getName(), id));
+        }
+    }
+
+    @Override
+    public void deleteFolder(Long id) {
+        String pathToFolder = environment.getRequiredProperty("win.user_files") + SEPARATOR + id;
+        File file = new File(pathToFolder);
+        if (file.delete()) {
+            logger.info(String.format("Папка %s удалена", pathToFolder));
+        } else {
+            logger.info(String.format("Папка %s не найдена", pathToFolder));
         }
     }
 

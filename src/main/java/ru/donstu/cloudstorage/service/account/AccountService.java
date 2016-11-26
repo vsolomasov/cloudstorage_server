@@ -42,6 +42,15 @@ public interface AccountService {
     void updateAccountPassword(Account account, String newPassword, String confirmPassword);
 
     /**
+     * Удаление аккаунта
+     *
+     * @param account
+     * @param id
+     * @return
+     */
+    boolean deleteAccount(Account account, Long id);
+
+    /**
      * Поиск аккаунта по имени
      *
      * @param name

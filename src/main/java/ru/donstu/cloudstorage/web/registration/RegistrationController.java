@@ -33,7 +33,7 @@ public class RegistrationController {
     @RequestMapping(method = RequestMethod.GET)
     public String registrationPage(Model model) {
         boolean isLogged = securityService.isLoggedUser();
-        if (isLogged){
+        if (isLogged) {
             return "redirect:/cloud";
         }
         model.addAttribute("isLogged", securityService.isLoggedUser());

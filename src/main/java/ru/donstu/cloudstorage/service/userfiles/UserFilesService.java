@@ -48,6 +48,13 @@ public interface UserFilesService {
     void deleteFile(Long id, Account account);
 
     /**
+     * Удаление папки пользваотеля для хранения файлов
+     *
+     * @param id
+     */
+    void deleteFolder(Long id);
+
+    /**
      * Скачивание файла c сервера
      *
      * @param id
