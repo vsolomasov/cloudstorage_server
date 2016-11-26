@@ -9,7 +9,17 @@ import ru.donstu.cloudstorage.domain.account.entity.Account;
  */
 public interface SecurityService {
 
+    /**
+     * Авторизован ли пользователь
+     *
+     * @return
+     */
     boolean isLoggedUser();
 
+    /**
+     * Получить авторизованный аккаунт
+     *
+     * @return
+     */
     Account getLoggedAccount();
 }

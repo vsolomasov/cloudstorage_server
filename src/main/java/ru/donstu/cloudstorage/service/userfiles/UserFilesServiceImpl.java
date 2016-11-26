@@ -88,7 +88,7 @@ public class UserFilesServiceImpl implements UserFilesService {
                 logger.info(String.format("Файл %s не найден на диске, но удален из БД", userFiles.getFileName()));
             }
         } else {
-            logger.info(String.format("Пользователь %s пытался манипуляровать с файлом id=%d, которого не существует или принадлежит не ему", account.getName(), id));
+            logger.info(String.format("Пользователь %s пытался манипулировать с файлом id=%d, которого не существует или принадлежит не ему", account.getName(), id));
         }
     }
 

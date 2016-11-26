@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ru.donstu.cloudstorage.service.security.SecurityService;
 
 /**
- * Контроллер информации
+ * Контроллер страницы информации
  *
  * @author v.solomasov
  */

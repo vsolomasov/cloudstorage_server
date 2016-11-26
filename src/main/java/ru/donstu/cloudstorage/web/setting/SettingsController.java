@@ -14,7 +14,7 @@ import ru.donstu.cloudstorage.validator.EmailValidator;
 import ru.donstu.cloudstorage.validator.PasswordValidator;
 
 /**
- * Контроллер настройки аккаунта
+ * Контроллер страницы настроек аккаунта
  *
  * @author v.solomasov
  */

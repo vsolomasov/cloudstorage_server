@@ -13,7 +13,7 @@ import ru.donstu.cloudstorage.service.security.SecurityService;
 import ru.donstu.cloudstorage.validator.AccountValidator;
 
 /**
- * Контроллер регистрации
+ * Контроллер страницы регистрации
  *
  * @author v.solomasov
  */
