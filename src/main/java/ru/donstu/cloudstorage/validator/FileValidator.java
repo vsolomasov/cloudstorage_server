@@ -15,7 +15,6 @@ import static ru.donstu.cloudstorage.config.constant.Constants.MESSAGE_PROPERTY;
  * @author v.solomasov
  */
 @Component
-@PropertySource(MESSAGE_PROPERTY)
 public class FileValidator {
 
     @Autowired

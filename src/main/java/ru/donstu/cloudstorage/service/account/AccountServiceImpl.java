@@ -38,6 +38,13 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public void updateAccountEmail(Account account, String email) {
+        logger.info(String.format("Пользователь %d сменил почту %s на %s", account.getId(), account.getEmail(), email));
+        account.setEmail(email);
+        accountRepository.save(account);
+    }
+
+    @Override
     public Account findAccountByName(String name) {
         Account account = accountRepository.findByName(name);
         return account;

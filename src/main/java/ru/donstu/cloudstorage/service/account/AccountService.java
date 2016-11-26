@@ -25,6 +25,14 @@ public interface AccountService {
     void updateAccountName(Account account, String name);
 
     /**
+     * Обновить электронную почту аккаунта
+     *
+     * @param account
+     * @param email
+     */
+    void updateAccountEmail(Account account, String email);
+
+    /**
      * Поиск аккаунта по имени
      *
      * @param name

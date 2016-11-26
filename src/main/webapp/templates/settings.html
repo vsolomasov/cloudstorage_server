@@ -11,7 +11,16 @@
         <div class="row">
             <input class="offset-md-2 col-md-8 form-control-lg form-control mb-1" type="text" placeholder="Логин"
                    th:value="${account.name}" name="name">
-            <button class="offset-md-2 col-md-8 btn btn-lg btn-block btn-primary mb-2">Изменить</button>
+            <button class="offset-md-2 col-md-8 btn btn-lg btn-block btn-primary mb-2">Изменить логин</button>
+        </div>
+    </form>
+    <form autocomplete="off" action="/settings/email" method="post">
+        <div class="row">
+            <input class="offset-md-2 col-md-8 form-control-lg form-control mb-1" type="email" placeholder="Текущий e-mail"
+                   name="currentEmail">
+            <input class="offset-md-2 col-md-8 form-control-lg form-control mb-1" type="email" placeholder="Новый e-mail"
+                   name="newEmail">
+            <button class="offset-md-2 col-md-8 btn btn-lg btn-block btn-primary mb-2">Изменить электронную почту</button>
         </div>
     </form>
     <form autocomplete="off" action="/settings/password" method="post">
@@ -22,7 +31,7 @@
                    placeholder="Новый пароль" name="newPassword">
             <input class="offset-md-2 col-md-8 form-control-lg form-control mb-1" type="password"
                    placeholder="Повторите пароль" name="confirmPassword">
-            <button class="offset-md-2 col-md-8 btn btn-lg btn-block btn-primary mb-2">Изменить</button>
+            <button class="offset-md-2 col-md-8 btn btn-lg btn-block btn-primary mb-2">Изменить пароль</button>
         </div>
     </form>
     <a th:href="'/settings/delete/' + ${account.id}">
