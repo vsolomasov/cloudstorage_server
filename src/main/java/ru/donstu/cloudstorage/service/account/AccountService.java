@@ -39,4 +39,12 @@ public interface AccountService {
      * @return
      */
     boolean checkAccountName(String name);
+
+    /**
+     * Проверка на совпадение элекстронной почты
+     *
+     * @param email
+     * @return
+     */
+    boolean checkAccountEmail(String email);
 }

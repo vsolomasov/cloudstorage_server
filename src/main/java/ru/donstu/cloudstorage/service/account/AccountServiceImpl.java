@@ -53,4 +53,15 @@ public class AccountServiceImpl implements AccountService {
         logger.info(String.format("Пользователь с именем %s - найден (id = %d)", name, account.getId()));
         return true;
     }
+
+    @Override
+    public boolean checkAccountEmail(String email) {
+        Account account = accountRepository.findByEmail(email);
+        if (account == null) {
+            logger.info(String.format("Пользователь с почтой %s - не найден", email));
+            return false;
+        }
+        logger.info(String.format("Пользователь с почтой %s - найден (id = %d)", email, account.getId()));
+        return true;
+    }
 }

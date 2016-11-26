@@ -62,6 +62,10 @@ public class AccountValidator implements Validator {
             errors.reject(environment.getRequiredProperty("validator.email.reg"));
         }
 
+        if (accountService.checkAccountEmail(account.getEmail())) {
+            errors.reject(environment.getRequiredProperty("validator.email.same"));
+        }
+
         if (!checkRegEx(account.getPassword(), PATTERN_PASSWORD)) {
             errors.reject(environment.getRequiredProperty("validator.password.reg"));
         }
