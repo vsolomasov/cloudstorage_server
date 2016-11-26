@@ -26,6 +26,7 @@ public class AccountServiceImpl implements AccountService {
     public void saveAccount(Account account) {
         account.setRole(Role.ROLE_USER);
         account.setDataCreate(Calendar.getInstance());
+        logger.info(String.format("Зарегистрирован новый пользовательй %s", account.getName()));
         accountRepository.save(account);
     }
 

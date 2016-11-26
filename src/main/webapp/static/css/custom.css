@@ -19,18 +19,12 @@ a:focus {
         width: 100%;
         padding:  1rem;
     }
-    .custom-container-form {
-        width: 25rem;
-    }
 }
 
 @media (min-width:  768px) {
     .custom-container {
         width: 760px;
         padding:  1rem;
-    }
-    .custom-container-form {
-        width: 25rem;
     }
 }
 
@@ -85,11 +79,6 @@ a:focus {
 }
 
 .custom-container {
-    margin-right: auto;
-    margin-left: auto;
-}
-
-.custom-container-form {
     margin-right: auto;
     margin-left: auto;
 }

@@ -11,15 +11,19 @@
         <span th:text="${error.code}"></span>
     </div>
 </th:block>
-<div class="custom-container-form">
+<div class="custom-container">
     <form autocomplete="off" action="#" th:action="@{/registration}" th:object="${accountForm}" method="post">
-        <input class="form-control-lg form-control mb-1" type="text" placeholder="Логин" required="required" th:field="*{name}">
-        <input class="form-control-lg form-control mb-1" type="email" placeholder="E-mail" required="required" th:field="*{email}">
-        <input class="form-control-lg form-control mb-1" type="password" required="required" placeholder="Пароль" th:field="*{password}">
-        <input class="form-control-lg form-control mb-1" type="password" required="required" placeholder="Повторите пароль" th:field="*{confirmPassword}">
-        <button class="btn btn-lg btn-block btn-primary">Зарегистрироваться</button>
         <div class="row">
-            <div class="col-lg-12 text-lg-right"><a th:href="@{/recovery}">Забыли пароль?</a></div>
+            <input class="offset-md-2 col-md-8 form-control-lg form-control mb-1" type="text" placeholder="Логин" required="required"
+                   th:field="*{name}">
+            <input class="offset-md-2 col-md-8 form-control-lg form-control mb-1" type="email" placeholder="E-mail" required="required"
+                   th:field="*{email}">
+            <input class=" offset-md-2 col-md-8 form-control-lg form-control mb-1" type="password" required="required" placeholder="Пароль"
+                   th:field="*{password}">
+            <input class="offset-md-2 col-md-8 form-control-lg form-control mb-1" type="password" required="required"
+                   placeholder="Повторите пароль" th:field="*{confirmPassword}">
+            <button class="offset-md-2 col-md-8 btn btn-lg btn-block btn-primary">Зарегистрироваться</button>
+            <div class="offset-md-2 col-md-8 text-md-right"><a th:href="@{/recovery}">Забыли пароль?</a></div>
         </div>
     </form>
 </div>
