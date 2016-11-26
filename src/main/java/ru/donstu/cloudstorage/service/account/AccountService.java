@@ -10,11 +10,19 @@ import ru.donstu.cloudstorage.domain.account.entity.Account;
 public interface AccountService {
 
     /**
-     * Сохранение аккаунты
+     * Сохранение аккаунта
      *
      * @param account
      */
     void saveAccount(Account account);
+
+    /**
+     * Обновить имя аккаунта
+     *
+     * @param account
+     * @param name
+     */
+    void updateAccountName(Account account, String name);
 
     /**
      * Поиск аккаунта по имени

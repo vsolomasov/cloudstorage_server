@@ -7,7 +7,12 @@
 <body>
 <div th:include="fragments/header::body"></div>
 
-<div class="custom-container">Settings!</div>
+<div class="custom-container">
+    <form autocomplete="off" action="/settings/name" method="post">
+        <input class="form-control-lg form-control mb-1" type="text" placeholder="Логин" th:value="${account.name}" name="name">
+        <button class="btn btn-lg btn-block btn-primary">Изменить</button>
+    </form>
+</div>
 
 <div class="custom-container">
     <div th:include="fragments/footer::body"></div>

@@ -1,5 +1,6 @@
 package ru.donstu.cloudstorage.service.account;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.donstu.cloudstorage.domain.account.AccountRepository;
@@ -16,6 +17,8 @@ import java.util.Calendar;
 @Service
 public class AccountServiceImpl implements AccountService {
 
+    private static final Logger logger = Logger.getLogger(AccountServiceImpl.class);
+
     @Autowired
     private AccountRepository accountRepository;
 
@@ -23,6 +26,13 @@ public class AccountServiceImpl implements AccountService {
     public void saveAccount(Account account) {
         account.setRole(Role.ROLE_USER);
         account.setDataCreate(Calendar.getInstance());
+        accountRepository.save(account);
+    }
+
+    @Override
+    public void updateAccountName(Account account, String name) {
+        logger.info(String.format("Пользователь %d сменил имя %s на %s", account.getId(), account.getName(), name));
+        account.setName(name);
         accountRepository.save(account);
     }
 
@@ -36,8 +46,10 @@ public class AccountServiceImpl implements AccountService {
     public boolean checkAccountName(String name) {
         Account account = accountRepository.findByName(name);
         if (account == null) {
+            logger.info(String.format("Пользователь с именем %s - не найден", name));
             return false;
         }
+        logger.info(String.format("Пользователь с именем %s - найден (id = %d)", name, account.getId()));
         return true;
     }
 }
