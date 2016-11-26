@@ -11,7 +11,7 @@ public class RegexUtil {
 
     public static final String PATTERN_PASSWORD = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,50}$";
 
-    public static final String PATTERN_LOGIN = "^[a-z0-9A-Z].{3,50}";
+    public static final String PATTERN_LOGIN = "^[a-z0-9].{3,50}";
 
     public static final String PATTERN_EMAIL = "^(?=.*[@])(?=.*[.]).{3,50}$";
 

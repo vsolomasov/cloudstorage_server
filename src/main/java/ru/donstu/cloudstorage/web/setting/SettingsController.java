@@ -12,6 +12,7 @@ import ru.donstu.cloudstorage.service.account.AccountService;
 import ru.donstu.cloudstorage.service.security.SecurityService;
 import ru.donstu.cloudstorage.validator.AccountValidator;
 import ru.donstu.cloudstorage.validator.EmailValidator;
+import ru.donstu.cloudstorage.validator.PasswordValidator;
 
 /**
  * Контроллер настройки аккаунта
@@ -30,6 +31,9 @@ public class SettingsController {
 
     @Autowired
     private EmailValidator emailValidator;
+
+    @Autowired
+    private PasswordValidator passwordValidator;
 
     @RequestMapping(method = RequestMethod.GET)
     public String settingsPage(Model model) {
@@ -51,15 +55,29 @@ public class SettingsController {
     }
 
     @RequestMapping(value = "/email", method = RequestMethod.POST)
-    public String emailSetting(@RequestParam("currentEmail") String currentEmail,
-                               @RequestParam("newEmail") String newEmail,
-                               Model model) {
+    public String settingsEmail(@RequestParam("currentEmail") String currentEmail,
+                                @RequestParam("newEmail") String newEmail,
+                                Model model) {
         Account account = securityService.getLoggedAccount();
         if (!emailValidator.validate(account, currentEmail, newEmail)) {
             model.addAttribute("emailError", true);
             return "redirect:/settings";
         }
         accountService.updateAccountEmail(account, newEmail);
+        return "redirect:/cloud";
+    }
+
+    @RequestMapping(value = "/password", method = RequestMethod.POST)
+    public String settingsPassword(@RequestParam("currentPassword") String currentPassword,
+                                   @RequestParam("newPassword") String newPassword,
+                                   @RequestParam("confirmPassword") String confirmPassword,
+                                   Model model) {
+        Account account = securityService.getLoggedAccount();
+        if (!passwordValidator.validate(account, currentPassword, newPassword, confirmPassword)) {
+            model.addAttribute("passwordError", true);
+            return "redirect:/settings";
+        }
+        accountService.updateAccountPassword(account, newPassword, confirmPassword);
         return "redirect:/cloud";
     }
 }

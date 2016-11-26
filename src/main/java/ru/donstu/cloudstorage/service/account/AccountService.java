@@ -33,6 +33,15 @@ public interface AccountService {
     void updateAccountEmail(Account account, String email);
 
     /**
+     * Обновить пароль аккаунта
+     *
+     * @param account
+     * @param newPassword
+     * @param confirmPassword
+     */
+    void updateAccountPassword(Account account, String newPassword, String confirmPassword);
+
+    /**
      * Поиск аккаунта по имени
      *
      * @param name
