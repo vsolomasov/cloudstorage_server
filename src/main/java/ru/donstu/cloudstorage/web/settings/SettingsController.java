@@ -1,10 +1,8 @@
-package ru.donstu.cloudstorage.web.setting;
+package ru.donstu.cloudstorage.web.settings;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,11 +10,12 @@ import ru.donstu.cloudstorage.domain.account.entity.Account;
 import ru.donstu.cloudstorage.service.account.AccountService;
 import ru.donstu.cloudstorage.service.security.SecurityService;
 import ru.donstu.cloudstorage.validator.EmailValidator;
+import ru.donstu.cloudstorage.validator.NameValidator;
 import ru.donstu.cloudstorage.validator.PasswordValidator;
 
 import static ru.donstu.cloudstorage.web.cloud.CloudController.REDIRECT_CLOUD;
 import static ru.donstu.cloudstorage.web.login.LoginController.REDIRECT_LOGOUT;
-import static ru.donstu.cloudstorage.web.setting.SettingsController.ROUTE_SETTINGS;
+import static ru.donstu.cloudstorage.web.settings.SettingsController.ROUTE_SETTINGS;
 
 /**
  * Контроллер страницы настроек аккаунта
@@ -38,6 +37,9 @@ public class SettingsController {
     private AccountService accountService;
 
     @Autowired
+    private NameValidator nameValidator;
+
+    @Autowired
     private EmailValidator emailValidator;
 
     @Autowired
@@ -53,12 +55,11 @@ public class SettingsController {
     @RequestMapping(value = "/name", method = RequestMethod.POST)
     public String settingsName(@RequestParam("name") String name,
                                Model model) {
-        Account account = securityService.getLoggedAccount();
-        if (accountService.checkAccountName(name)) {
-            model.addAttribute("nameError", true);
+        if (!nameValidator.validate(name)) {
+            model.addAttribute("errorName", true);
             return REDIRECT_SETTINGS;
         }
-        accountService.updateAccountName(account, name);
+        accountService.updateAccountName(securityService.getLoggedAccount(), name);
         return REDIRECT_CLOUD;
     }
 
@@ -68,7 +69,7 @@ public class SettingsController {
                                 Model model) {
         Account account = securityService.getLoggedAccount();
         if (!emailValidator.validate(account, currentEmail, newEmail)) {
-            model.addAttribute("emailError", true);
+            model.addAttribute("errorEmail", true);
             return REDIRECT_SETTINGS;
         }
         accountService.updateAccountEmail(account, newEmail);
@@ -82,7 +83,7 @@ public class SettingsController {
                                    Model model) {
         Account account = securityService.getLoggedAccount();
         if (!passwordValidator.validate(account, currentPassword, newPassword, confirmPassword)) {
-            model.addAttribute("passwordError", true);
+            model.addAttribute("errorPassword", true);
             return REDIRECT_SETTINGS;
         }
         accountService.updateAccountPassword(account, newPassword, confirmPassword);
@@ -94,7 +95,7 @@ public class SettingsController {
                                  Model model) {
         Account account = securityService.getLoggedAccount();
         /*TODO: Как добавиться SHA, сравнивать хэш-функции*/
-        if (!account.getPassword().equals(password)){
+        if (!account.getPassword().equals(password)) {
             model.addAttribute("deleteError", true);
             return REDIRECT_SETTINGS;
         }

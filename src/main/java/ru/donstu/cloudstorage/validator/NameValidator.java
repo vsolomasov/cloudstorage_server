@@ -25,6 +25,16 @@ public class NameValidator {
     @Autowired
     private Environment environment;
 
+    public boolean validate(String name) {
+        if (!RegexUtil.checkRegEx(name, RegexUtil.PATTERN_LOGIN)) {
+            return false;
+        }
+        if (accountService.checkAccountName(name)) {
+            return false;
+        }
+        return true;
+    }
+
     public void validate(String name, Errors errors) {
         if (!RegexUtil.checkRegEx(name, RegexUtil.PATTERN_LOGIN)) {
             errors.reject(environment.getRequiredProperty("validator.login.reg"));
