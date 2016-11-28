@@ -22,4 +22,12 @@ public interface SecurityService {
      * @return
      */
     Account getLoggedAccount();
+
+    /**
+     * Авторизация пользователя
+     *
+     * @param name
+     * @param password
+     */
+    void autoLogin(String name, String password);
 }

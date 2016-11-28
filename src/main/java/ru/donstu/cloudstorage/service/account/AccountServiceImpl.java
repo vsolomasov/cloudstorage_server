@@ -7,6 +7,7 @@ import ru.donstu.cloudstorage.domain.account.AccountRepository;
 import ru.donstu.cloudstorage.domain.account.entity.Account;
 import ru.donstu.cloudstorage.domain.account.enums.Role;
 import ru.donstu.cloudstorage.domain.userfiles.entity.UserFiles;
+import ru.donstu.cloudstorage.service.security.SecurityService;
 import ru.donstu.cloudstorage.service.userfiles.UserFilesService;
 
 import java.util.Calendar;
@@ -28,6 +29,9 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private UserFilesService filesService;
 
+    @Autowired
+    private SecurityService securityService;
+
     @Override
     public void saveAccount(Account account) {
         account.setRole(Role.ROLE_USER);
@@ -41,6 +45,7 @@ public class AccountServiceImpl implements AccountService {
         logger.info(String.format("Пользователь %d сменил имя %s на %s", account.getId(), account.getName(), name));
         account.setName(name);
         accountRepository.save(account);
+        securityService.autoLogin(account.getName(), account.getPassword());
     }
 
     @Override
