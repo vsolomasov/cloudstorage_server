@@ -13,14 +13,22 @@ import ru.donstu.cloudstorage.service.security.SecurityService;
 import ru.donstu.cloudstorage.validator.EmailValidator;
 import ru.donstu.cloudstorage.validator.PasswordValidator;
 
+import static ru.donstu.cloudstorage.web.cloud.CloudController.REDIRECT_CLOUD;
+import static ru.donstu.cloudstorage.web.login.LoginController.REDIRECT_LOGOUT;
+import static ru.donstu.cloudstorage.web.setting.SettingsController.ROUTE_SETTINGS;
+
 /**
  * Контроллер страницы настроек аккаунта
  *
  * @author v.solomasov
  */
 @Controller
-@RequestMapping("/settings")
+@RequestMapping(ROUTE_SETTINGS)
 public class SettingsController {
+
+    public static final String ROUTE_SETTINGS = "/settings";
+
+    public static final String REDIRECT_SETTINGS = "redirect:" + ROUTE_SETTINGS;
 
     @Autowired
     private SecurityService securityService;
@@ -47,10 +55,10 @@ public class SettingsController {
         Account account = securityService.getLoggedAccount();
         if (accountService.checkAccountName(name)) {
             model.addAttribute("nameError", true);
-            return "redirect:/settings";
+            return REDIRECT_SETTINGS;
         }
         accountService.updateAccountName(account, name);
-        return "redirect:/cloud";
+        return REDIRECT_CLOUD;
     }
 
     @RequestMapping(value = "/email", method = RequestMethod.POST)
@@ -60,10 +68,10 @@ public class SettingsController {
         Account account = securityService.getLoggedAccount();
         if (!emailValidator.validate(account, currentEmail, newEmail)) {
             model.addAttribute("emailError", true);
-            return "redirect:/settings";
+            return REDIRECT_SETTINGS;
         }
         accountService.updateAccountEmail(account, newEmail);
-        return "redirect:/cloud";
+        return REDIRECT_CLOUD;
     }
 
     @RequestMapping(value = "/password", method = RequestMethod.POST)
@@ -74,17 +82,17 @@ public class SettingsController {
         Account account = securityService.getLoggedAccount();
         if (!passwordValidator.validate(account, currentPassword, newPassword, confirmPassword)) {
             model.addAttribute("passwordError", true);
-            return "redirect:/settings";
+            return REDIRECT_SETTINGS;
         }
         accountService.updateAccountPassword(account, newPassword, confirmPassword);
-        return "redirect:/cloud";
+        return REDIRECT_CLOUD;
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String settingsDelete(@PathVariable("id") Long id) {
         if (!accountService.deleteAccount(securityService.getLoggedAccount(), id)) {
-            return "redirect:/cloud";
+            return REDIRECT_CLOUD;
         }
-        return "redirect:/logout";
+        return REDIRECT_LOGOUT;
     }
 }

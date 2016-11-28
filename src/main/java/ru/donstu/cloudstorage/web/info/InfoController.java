@@ -7,14 +7,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.donstu.cloudstorage.service.security.SecurityService;
 
+import static ru.donstu.cloudstorage.web.cloud.CloudController.REDIRECT_CLOUD;
+import static ru.donstu.cloudstorage.web.info.InfoController.ROUTE_BASE;
+
 /**
  * Контроллер страницы информации
  *
  * @author v.solomasov
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping(ROUTE_BASE)
 public class InfoController {
+
+    public static final String ROUTE_BASE = "/";
 
     @Autowired
     private SecurityService securityService;
@@ -23,7 +28,7 @@ public class InfoController {
     public String infoPage(Model model) {
         boolean isLogged = securityService.isLoggedUser();
         if (isLogged) {
-            return "redirect:/cloud";
+            return REDIRECT_CLOUD;
         }
         model.addAttribute("isLogged", isLogged);
         return "info";

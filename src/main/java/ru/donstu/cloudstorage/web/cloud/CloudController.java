@@ -15,6 +15,8 @@ import ru.donstu.cloudstorage.validator.FileValidator;
 
 import javax.servlet.http.HttpServletResponse;
 
+import static ru.donstu.cloudstorage.web.cloud.CloudController.ROUTE_CLOUD;
+
 
 /**
  * Контроллер основной страницы
@@ -22,8 +24,12 @@ import javax.servlet.http.HttpServletResponse;
  * @author v.solomasov
  */
 @Controller
-@RequestMapping("/cloud")
+@RequestMapping(ROUTE_CLOUD)
 public class CloudController {
+
+    public static final String ROUTE_CLOUD = "/cloud";
+
+    public static final String REDIRECT_CLOUD = "redirect:" + ROUTE_CLOUD;
 
     @Autowired
     private SecurityService securityService;
@@ -50,16 +56,16 @@ public class CloudController {
         boolean valid = fileValidator.validate(file);
         if (!valid) {
             model.addAttribute("errors", true);
-            return "redirect:/cloud";
+            return REDIRECT_CLOUD;
         }
         filesService.uploadFile(securityService.getLoggedAccount(), file);
-        return "redirect:/cloud";
+        return REDIRECT_CLOUD;
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteUserFile(@PathVariable("id") Long id) {
         filesService.deleteFile(id, securityService.getLoggedAccount());
-        return "redirect:/cloud";
+        return REDIRECT_CLOUD;
     }
 
     @RequestMapping(value = "/download/{id}", method = RequestMethod.GET)

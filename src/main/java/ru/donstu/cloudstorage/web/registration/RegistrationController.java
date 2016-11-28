@@ -12,14 +12,20 @@ import ru.donstu.cloudstorage.service.account.AccountService;
 import ru.donstu.cloudstorage.service.security.SecurityService;
 import ru.donstu.cloudstorage.validator.AccountValidator;
 
+import static ru.donstu.cloudstorage.web.cloud.CloudController.REDIRECT_CLOUD;
+import static ru.donstu.cloudstorage.web.login.LoginController.REDIRECT_LOGIN;
+import static ru.donstu.cloudstorage.web.registration.RegistrationController.ROUTE_REGISTRATION;
+
 /**
  * Контроллер страницы регистрации
  *
  * @author v.solomasov
  */
 @Controller
-@RequestMapping("/registration")
+@RequestMapping(ROUTE_REGISTRATION)
 public class RegistrationController {
+
+    public static final String ROUTE_REGISTRATION = "/registration";
 
     @Autowired
     private SecurityService securityService;
@@ -34,7 +40,7 @@ public class RegistrationController {
     public String registrationPage(Model model) {
         boolean isLogged = securityService.isLoggedUser();
         if (isLogged) {
-            return "redirect:/cloud";
+            return REDIRECT_CLOUD;
         }
         model.addAttribute("isLogged", securityService.isLoggedUser());
         model.addAttribute("accountForm", new Account());
@@ -52,6 +58,6 @@ public class RegistrationController {
             return "registration";
         }
         accountService.saveAccount(accountForm);
-        return "redirect:/login";
+        return REDIRECT_LOGIN;
     }
 }
