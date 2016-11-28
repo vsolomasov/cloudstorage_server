@@ -12,9 +12,6 @@ repositories {
 
 dependencies {
 
-    // Log4J
-    compile group: 'log4j', name: 'log4j', version: '1.2.17'
-
     // Java Servlet API
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
 
@@ -23,6 +20,12 @@ dependencies {
 
     // JDBC PostgreSQL (Driver)
     compile group: 'org.postgresql', name: 'postgresql', version: '9.4.1211'
+
+    /**
+     * SLF4J
+     */
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
+    compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.21'
 
     /**
      * Apache Commons
