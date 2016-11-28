@@ -1,5 +1,6 @@
 package ru.donstu.cloudstorage.web.setting;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -88,11 +89,16 @@ public class SettingsController {
         return REDIRECT_CLOUD;
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String settingsDelete(@PathVariable("id") Long id) {
-        if (!accountService.deleteAccount(securityService.getLoggedAccount(), id)) {
-            return REDIRECT_CLOUD;
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String settingsDelete(@RequestParam("password") String password,
+                                 Model model) {
+        Account account = securityService.getLoggedAccount();
+        /*TODO: Как добавиться SHA, сравнивать хэш-функции*/
+        if (!account.getPassword().equals(password)){
+            model.addAttribute("deleteError", true);
+            return REDIRECT_SETTINGS;
         }
+        accountService.deleteAccount(account);
         return REDIRECT_LOGOUT;
     }
 }

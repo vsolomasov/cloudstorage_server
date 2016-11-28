@@ -59,17 +59,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean deleteAccount(Account account, Long id) {
-        if (account.getId() != id) {
-            logger.info(String.format("Пользователь id=%d пытался удалить пользователя id=%d", account.getId(), id));
-            return false;
-        }
+    public void deleteAccount(Account account) {
         List<UserFiles> files = filesService.findUserFilesByAccount(account);
         files.stream().forEach(file -> filesService.deleteFile(file.getId(), account));
         filesService.deleteFolder(account.getId());
-        logger.info(String.format("Пользователь %s удален", id));
         accountRepository.delete(account);
-        return true;
+        logger.info(String.format("Пользователь id=%s удален", account.getId()));
     }
 
     @Override

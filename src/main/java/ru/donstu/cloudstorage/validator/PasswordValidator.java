@@ -15,6 +15,7 @@ public class PasswordValidator {
         if (currentPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
             return false;
         }
+        /*TODO: Как добавиться SHA, сравнивать хэш-функции*/
         if (!currentPassword.equals(account.getPassword())) {
             return false;
         }

@@ -45,10 +45,8 @@ public interface AccountService {
      * Удаление аккаунта
      *
      * @param account
-     * @param id
-     * @return
      */
-    boolean deleteAccount(Account account, Long id);
+    void deleteAccount(Account account);
 
     /**
      * Поиск аккаунта по имени

@@ -34,11 +34,13 @@
             <button class="offset-md-2 col-md-8 btn btn-lg btn-block btn-primary mb-2">Изменить пароль</button>
         </div>
     </form>
-    <a th:href="'/settings/delete/' + ${account.id}">
+    <form autocomplete="off" action="/settings/delete" method="post">
         <div class="row">
+            <input class="offset-md-2 col-md-8 form-control-lg form-control mb-1" type="password"
+                   placeholder="Пароль" name="password">
             <button class="offset-md-2 col-md-8 btn btn-lg btn-block btn-danger">Удалить аккаунт</button>
         </div>
-    </a>
+    </form>
 </div>
 <div class="custom-container">
     <div th:include="fragments/footer::body"></div>

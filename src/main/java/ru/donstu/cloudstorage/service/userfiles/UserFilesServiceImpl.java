@@ -37,6 +37,8 @@ public class UserFilesServiceImpl implements UserFilesService {
 
     private static final String HEADER_TYPE = "Content-Disposition";
 
+    private static final String USER_FILES = "linux.user_files";
+
     private static final int DIVIDE_MEGABYTE = 1000000;
 
     private static final int POINT_OFFSET = 2;
@@ -50,7 +52,7 @@ public class UserFilesServiceImpl implements UserFilesService {
     @Override
     public void uploadFile(Account account, MultipartFile file) {
         String fullNameFile = file.getOriginalFilename();
-        String path = environment.getRequiredProperty("win.user_files") + SEPARATOR + account.getId();
+        String path = environment.getRequiredProperty(USER_FILES) + SEPARATOR + account.getId();
         try {
             saveFileOnDisk(file, path, fullNameFile);
             saveInfoFile(account, fullNameFile, file.getSize(), path);
@@ -94,7 +96,7 @@ public class UserFilesServiceImpl implements UserFilesService {
 
     @Override
     public void deleteFolder(Long id) {
-        String pathToFolder = environment.getRequiredProperty("win.user_files") + SEPARATOR + id;
+        String pathToFolder = environment.getRequiredProperty(USER_FILES) + SEPARATOR + id;
         File file = new File(pathToFolder);
         if (file.delete()) {
             logger.info(String.format("Папка %s удалена", pathToFolder));
