@@ -6,15 +6,12 @@
 </head>
 <body>
 <div th:include="fragments/header::body"></div>
-
 <div class="custom-container">
-
-    <th:block class="custom-container" th:if="${errors}">
-        <div class="text-xs-center text-lg-center">
-            <span>Ошибка загрузки файла</span>
+    <div class="row" th:if="${errors}">
+        <div class="offset-xs-1 col-xs-10 offset-md-3 col-md-6 no-padding">
+            <div class="alert alert-danger">Ошибка загрузки файла</div>
         </div>
-    </th:block>
-
+    </div>
     <form class="form-inline row mb-1 ml-1" method="POST" action="/cloud/save" enctype="multipart/form-data">
         <input class="offset-xs-0 offset-lg-2 text-xs-center required" type="file" id="mfile" name="file">
         <div class="col-lg-1"></div>
@@ -40,7 +37,6 @@
         </tr>
     </table>
 </div>
-
 <div class="custom-container">
     <div th:include="fragments/footer::body"></div>
 </div>

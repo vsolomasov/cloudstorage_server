@@ -1,6 +1,8 @@
 package ru.donstu.cloudstorage.web.settings;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,7 @@ import ru.donstu.cloudstorage.validator.EmailValidator;
 import ru.donstu.cloudstorage.validator.NameValidator;
 import ru.donstu.cloudstorage.validator.PasswordValidator;
 
+import static ru.donstu.cloudstorage.config.constant.Constants.MESSAGE_PROPERTY;
 import static ru.donstu.cloudstorage.web.cloud.CloudController.REDIRECT_CLOUD;
 import static ru.donstu.cloudstorage.web.login.LoginController.REDIRECT_LOGOUT;
 import static ru.donstu.cloudstorage.web.settings.SettingsController.ROUTE_SETTINGS;
@@ -24,6 +27,7 @@ import static ru.donstu.cloudstorage.web.settings.SettingsController.ROUTE_SETTI
  */
 @Controller
 @RequestMapping(ROUTE_SETTINGS)
+@PropertySource(MESSAGE_PROPERTY)
 public class SettingsController {
 
     public static final String ROUTE_SETTINGS = "/settings";
@@ -45,10 +49,17 @@ public class SettingsController {
     @Autowired
     private PasswordValidator passwordValidator;
 
+    @Autowired
+    private Environment environment;
+
     @RequestMapping(method = RequestMethod.GET)
-    public String settingsPage(Model model) {
+    public String settingsPage(@RequestParam(value = "error", required = false) String error,
+                               Model model) {
         model.addAttribute("isLogged", securityService.isLoggedUser());
         model.addAttribute("account", securityService.getLoggedAccount());
+        if (error != null) {
+            model.addAttribute("error", environment.getRequiredProperty(error));
+        }
         return "settings";
     }
 
@@ -56,7 +67,7 @@ public class SettingsController {
     public String settingsName(@RequestParam("name") String name,
                                Model model) {
         if (!nameValidator.validate(name)) {
-            model.addAttribute("errorName", true);
+            model.addAttribute("error", "validator.login.reg");
             return REDIRECT_SETTINGS;
         }
         accountService.updateAccountName(securityService.getLoggedAccount(), name);
@@ -69,7 +80,7 @@ public class SettingsController {
                                 Model model) {
         Account account = securityService.getLoggedAccount();
         if (!emailValidator.validate(account, currentEmail, newEmail)) {
-            model.addAttribute("errorEmail", true);
+            model.addAttribute("error", "validator.email.reg");
             return REDIRECT_SETTINGS;
         }
         accountService.updateAccountEmail(account, newEmail);
@@ -83,7 +94,7 @@ public class SettingsController {
                                    Model model) {
         Account account = securityService.getLoggedAccount();
         if (!passwordValidator.validate(account, currentPassword, newPassword, confirmPassword)) {
-            model.addAttribute("errorPassword", true);
+            model.addAttribute("error", "validator.password.reg");
             return REDIRECT_SETTINGS;
         }
         accountService.updateAccountPassword(account, newPassword, confirmPassword);
@@ -96,7 +107,7 @@ public class SettingsController {
         Account account = securityService.getLoggedAccount();
         /*TODO: Как добавиться SHA, сравнивать хэш-функции*/
         if (!account.getPassword().equals(password)) {
-            model.addAttribute("deleteError", true);
+            model.addAttribute("error", "validator.delete");
             return REDIRECT_SETTINGS;
         }
         accountService.deleteAccount(account);

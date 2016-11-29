@@ -133,3 +133,8 @@ a:focus {
     text-align: center;
     color: #989898;
 }
+
+.no-padding {
+    padding-left: 0;
+    padding-right: 0;
+}

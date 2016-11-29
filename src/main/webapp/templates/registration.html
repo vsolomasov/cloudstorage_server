@@ -6,24 +6,27 @@
 </head>
 <body>
 <div th:include="fragments/header::body"></div>
-<th:block class="custom-container-form" th:if="${errors}">
-    <div class="text-xs-center text-md-center" th:each="error : ${errors}">
-        <span th:text="${error.code}"></span>
-    </div>
-</th:block>
 <div class="custom-container">
+    <div class="row" th:if="${errors}">
+        <div class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 no-padding" th:each="error : ${errors}">
+            <div class="alert alert-danger" th:text="${error.code}"></div>
+        </div>
+    </div>
     <form autocomplete="off" action="#" th:action="@{/registration}" th:object="${accountForm}" method="post">
         <div class="row">
-            <input class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 form-control-lg form-control mb-1" type="text" placeholder="Логин" required="required"
-                   th:field="*{name}">
-            <input class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 form-control-lg form-control mb-1" type="email" placeholder="E-mail" required="required"
-                   th:field="*{email}">
-            <input class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 form-control-lg form-control mb-1" type="password" required="required" placeholder="Пароль"
-                   th:field="*{password}">
-            <input class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 form-control-lg form-control mb-1" type="password" required="required"
-                   placeholder="Повторите пароль" th:field="*{confirmPassword}">
-            <button class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 btn btn-lg btn-block btn-primary">Зарегистрироваться</button>
-            <div class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 text-xs-right text-md-right"><a th:href="@{/recovery}">Забыли пароль?</a></div>
+            <input class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 form-control-lg form-control mb-1" type="text"
+                   placeholder="Логин" required="required" th:field="*{name}">
+            <input class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 form-control-lg form-control mb-1" type="email"
+                   placeholder="E-mail" required="required" th:field="*{email}">
+            <input class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 form-control-lg form-control mb-1" type="password"
+                   placeholder="Пароль" required="required" th:field="*{password}">
+            <input class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 form-control-lg form-control mb-1" type="password"
+                   placeholder="Повторите пароль" required="required" th:field="*{confirmPassword}">
+            <button class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 btn btn-lg btn-block btn-primary">
+                Зарегистрироваться
+            </button>
+            <div class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 text-xs-right text-md-right"><a
+                    th:href="@{/recovery}">Забыли пароль?</a></div>
         </div>
     </form>
 </div>
