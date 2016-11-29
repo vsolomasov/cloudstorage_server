@@ -9,36 +9,36 @@
 <div class="custom-container">
     <form autocomplete="off" action="/settings/name" method="post">
         <div class="row">
-            <input class="offset-md-2 col-md-8 form-control-lg form-control mb-1" type="text" placeholder="Логин"
+            <input class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 form-control-lg form-control mb-1" type="text" placeholder="Логин"
                    th:value="${account.name}" name="name">
-            <button class="offset-md-2 col-md-8 btn btn-lg btn-block btn-primary mb-2">Изменить логин</button>
+            <button class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 btn btn-lg btn-block btn-primary mb-2">Изменить логин</button>
         </div>
     </form>
     <form autocomplete="off" action="/settings/email" method="post">
         <div class="row">
-            <input class="offset-md-2 col-md-8 form-control-lg form-control mb-1" type="email" placeholder="Текущий e-mail"
+            <input class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 form-control-lg form-control mb-1" type="email" placeholder="Текущий e-mail"
                    name="currentEmail">
-            <input class="offset-md-2 col-md-8 form-control-lg form-control mb-1" type="email" placeholder="Новый e-mail"
+            <input class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 form-control-lg form-control mb-1" type="email" placeholder="Новый e-mail"
                    name="newEmail">
-            <button class="offset-md-2 col-md-8 btn btn-lg btn-block btn-primary mb-2">Изменить электронную почту</button>
+            <button class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 btn btn-lg btn-block btn-primary mb-2">Изменить электронную почту</button>
         </div>
     </form>
     <form autocomplete="off" action="/settings/password" method="post">
         <div class="row">
-            <input class="offset-md-2 col-md-8 form-control-lg form-control mb-1" type="password"
+            <input class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 form-control-lg form-control mb-1" type="password"
                    placeholder="Текущий пароль" name="currentPassword">
-            <input class="offset-md-2 col-md-8 form-control-lg form-control mb-1" type="password"
+            <input class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 form-control-lg form-control mb-1" type="password"
                    placeholder="Новый пароль" name="newPassword">
-            <input class="offset-md-2 col-md-8 form-control-lg form-control mb-1" type="password"
+            <input class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 form-control-lg form-control mb-1" type="password"
                    placeholder="Повторите пароль" name="confirmPassword">
-            <button class="offset-md-2 col-md-8 btn btn-lg btn-block btn-primary mb-2">Изменить пароль</button>
+            <button class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 btn btn-lg btn-block btn-primary mb-2">Изменить пароль</button>
         </div>
     </form>
     <form autocomplete="off" action="/settings/delete" method="post">
         <div class="row">
-            <input class="offset-md-2 col-md-8 form-control-lg form-control mb-1" type="password"
+            <input class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 form-control-lg form-control mb-1" type="password"
                    placeholder="Пароль" name="password">
-            <button class="offset-md-2 col-md-8 btn btn-lg btn-block btn-danger">Удалить аккаунт</button>
+            <button class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 btn btn-lg btn-block btn-danger">Удалить аккаунт</button>
         </div>
     </form>
 </div>

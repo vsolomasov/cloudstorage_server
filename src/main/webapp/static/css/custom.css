@@ -15,29 +15,57 @@ a:focus {
 }
 
 @media (max-width:  768px) {
+    .custom-middle,
     .custom-container {
         width: 100%;
         padding:  1rem;
     }
+    .custom-nav,
+    .navbar-brand {
+        text-align: center;
+        float: none;
+    }
 }
 
 @media (min-width:  768px) {
+    .custom-middle,
     .custom-container {
         width: 760px;
         padding:  1rem;
     }
+    .custom-nav {
+        float: right;
+    }
 }
 
-@media (min-height: 600px) {
-    .footer-container-reg {
+
+@media (min-height: 700px) {
+    .custom-middle {
+        margin-top: 15em;
+    }
+    .footer-container {
         position: fixed;
         bottom: 0;
         width: 100%;
     }
 }
 
-@media (min-height: 480px) {
-    .footer-container-log {
+@media (min-height: 580px) and (max-height: 700px){
+    .custom-middle {
+        margin-top: 10em;
+    }
+    .footer-container {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+}
+
+@media (min-height: 480px) and (max-height: 580px){
+    .custom-middle {
+        margin-top: 5em;
+    }
+    .footer-container {
         position: fixed;
         bottom: 0;
         width: 100%;
@@ -55,7 +83,6 @@ a:focus {
 
 .custom-nav {
     margin-top: 0.3rem;
-    float: right;
 }
 
 .custom-nav .nav-link {
@@ -78,6 +105,7 @@ a:focus {
     margin-left: 1rem;
 }
 
+.custom-middle,
 .custom-container {
     margin-right: auto;
     margin-left: auto;

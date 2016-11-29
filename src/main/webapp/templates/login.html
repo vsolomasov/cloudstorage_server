@@ -6,19 +6,20 @@
 </head>
 <body>
 <div th:include="fragments/header::body"></div>
-<div class="custom-container">
+<div class="custom-middle">
     <form autocomplete="off" action="#" th:action="@{/j_spring_security_check}" method="post">
         <div class="row">
-            <input class="offset-md-2 col-md-8 form-control-lg form-control mb-1" type="text" placeholder="Логин"
-                   required="required" name="j_username">
-            <input class="offset-md-2 col-md-8 form-control-lg form-control mb-1" type="password"
+            <input class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 form-control-lg form-control mb-1" type="text"
+                   placeholder="Логин" required="required" name="j_username">
+            <input class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 form-control-lg form-control mb-1" type="password"
                    placeholder="Пароль" required="required" name="j_password">
-            <button class="offset-md-2 col-md-8 btn btn-lg btn-block btn-primary">Войти</button>
-            <div class="offset-md-2 col-md-8 text-md-right"><a th:href="@{/recovery}">Забыли пароль?</a></div>
+            <button class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 btn btn-lg btn-block btn-primary">Войти</button>
+            <div class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 text-md-right text-xs-right"><a
+                    th:href="@{/recovery}">Забыли пароль?</a></div>
         </div>
     </form>
 </div>
-<div class="footer-container-log">
+<div class="footer-container">
     <div th:include="fragments/footer::body"></div>
 </div>
 </body>

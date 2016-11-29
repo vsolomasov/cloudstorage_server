@@ -9,14 +9,14 @@
 
 <div class="custom-container">
 
-    <th:block class="custom-container-form" th:if="${errors}">
-        <div class="text-lg-center">
+    <th:block class="custom-container" th:if="${errors}">
+        <div class="text-xs-center text-lg-center">
             <span>Ошибка загрузки файла</span>
         </div>
     </th:block>
 
     <form class="form-inline row mb-1 ml-1" method="POST" action="/cloud/save" enctype="multipart/form-data">
-        <input class="offset-lg-2 required" type="file" id="mfile" name="file">
+        <input class="offset-xs-0 offset-lg-2 text-xs-center required" type="file" id="mfile" name="file">
         <div class="col-lg-1"></div>
         <button class="btn btn-sm btn-custom"><img th:src="@{static/img/arrow-up.svg}"> Загрузить</button>
     </form>
