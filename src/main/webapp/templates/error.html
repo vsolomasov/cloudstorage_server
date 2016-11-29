@@ -10,7 +10,7 @@
         <div class="mb-2">
             <h2>Ошибка</h2>
             <p th:text="${error}"></p>
-            <p><a th:href="@{/cloud}" class="btn btn-md btn-secondary">Веруться к облаку</a></p>
+            <p><a class="btn btn-md btn-secondary" th:href="${isLogged} ? @{/cloud} : @{/}" th:text="${isLogged} ? 'Вернуться к облаку' : 'Вернуться'">Веруться к облаку</a></p>
         </div>
     </div>
 </div>
