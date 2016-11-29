@@ -30,7 +30,11 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         applicationContext.register(SecurityConfiguration.class);
         servletContext.addListener(new ContextLoaderListener(applicationContext));
 
-        ServletRegistration.Dynamic servletRegistration = servletContext.addServlet(DISPATCHER, new DispatcherServlet(applicationContext));
+        DispatcherServlet dispatcherServlet = new DispatcherServlet();
+        dispatcherServlet.setApplicationContext(applicationContext);
+        dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
+
+        ServletRegistration.Dynamic servletRegistration = servletContext.addServlet(DISPATCHER, dispatcherServlet);
         servletRegistration.addMapping(SERVLET_MAPPING);
         servletRegistration.setLoadOnStartup(1);
     }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta th:include="/fragments/resources::head">
+    <title>Что-то пошло не так</title>
+</head>
+<body>
+<div class="custom-middle">
+    <div class="custom-container text-md-center text-xs-center">
+        <div class="mb-2">
+            <h2>Ошибка</h2>
+            <p th:text="${error}"></p>
+            <p><a th:href="@{/cloud}" class="btn btn-md btn-secondary">Веруться к облаку</a></p>
+        </div>
+    </div>
+</div>
+<div class="footer-container">
+    <div th:include="fragments/footer::body"></div>
+</div>
+</body>
+</html>
