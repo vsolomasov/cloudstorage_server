@@ -6,9 +6,13 @@
 </head>
 <body>
 <div th:include="fragments/header::body"></div>
-
-<div class="custom-container">Info!</div>
-
+<div class="custom-container text-md-center text-xs-center">
+    <div class="mb-2" th:each="item : ${news}">
+        <h2 th:text="${item.titleNews}"></h2>
+        <p th:text="${item.descriptionNews}"></p>
+        <p><a th:href="'/info/' + ${item.id}" class="btn btn-md btn-secondary">Подробно...</a></p>
+    </div>
+</div>
 <div class="footer-container">
     <div th:include="fragments/footer::body"></div>
 </div>

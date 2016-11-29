@@ -4,7 +4,7 @@
 <div class="clearfix">
     <div class="custom-container">
         <div class="navbar edit-padding">
-            <h3 class="navbar-brand"><img src="../../static/img/server.svg" th:src="@{static/img/server.svg}"> CloudStorage</h3>
+            <a th:href="${isLogged} ? '/cloud' : '/'"><h3 class="navbar-brand"><img src="../../static/img/server.svg" th:src="@{static/img/server.svg}"> CloudStorage</h3></a>
             <nav class="custom-nav" th:if="${!isLogged}">
                 <a class="nav-link" th:classappend="(${#strings.equals(#httpServletRequest.requestURI, '/')} ? 'active')" th:href="@{/}">Инфо</a>
                 <a class="nav-link" th:classappend="(${#strings.contains(#httpServletRequest.requestURI, '/registration')} ? 'active')" th:href="@{/registration}">Регистрация</a>
