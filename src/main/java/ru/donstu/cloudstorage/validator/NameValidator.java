@@ -26,7 +26,7 @@ public class NameValidator {
     private Environment environment;
 
     public boolean validate(String name) {
-        if (!RegexUtil.checkRegEx(name, RegexUtil.PATTERN_LOGIN)) {
+        if (!RegexUtil.checkRegEx(name, RegexUtil.PATTERN_LOGIN_1) || !RegexUtil.checkRegEx(name, RegexUtil.PATTERN_LOGIN_2)) {
             return false;
         }
         if (accountService.checkAccountName(name)) {
@@ -36,7 +36,7 @@ public class NameValidator {
     }
 
     public void validate(String name, Errors errors) {
-        if (!RegexUtil.checkRegEx(name, RegexUtil.PATTERN_LOGIN)) {
+        if (!RegexUtil.checkRegEx(name, RegexUtil.PATTERN_LOGIN_1) || !RegexUtil.checkRegEx(name, RegexUtil.PATTERN_LOGIN_2)) {
             errors.reject(environment.getRequiredProperty("validator.login.reg"));
         }
         if (accountService.checkAccountName(name)) {
