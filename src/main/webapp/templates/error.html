@@ -9,7 +9,7 @@
     <div class="custom-container text-md-center text-xs-center">
         <div class="mb-2">
             <h2>Ошибка</h2>
-            <p th:text="${error}"></p>
+            <p th:text="${messages.text}"></p>
             <p><a class="btn btn-md btn-secondary" th:href="${isLogged} ? @{/cloud} : @{/}" th:text="${isLogged} ? 'Вернуться к облаку' : 'Вернуться'">Веруться к облаку</a></p>
         </div>
     </div>

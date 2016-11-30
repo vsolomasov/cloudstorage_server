@@ -8,9 +8,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import ru.donstu.cloudstorage.domain.message.entity.Message;
+import ru.donstu.cloudstorage.domain.message.enums.Type;
 import ru.donstu.cloudstorage.service.security.SecurityService;
 
 import javax.servlet.http.HttpServletRequest;
+
+import static ru.donstu.cloudstorage.web.registration.RegistrationController.MESSAGES;
 
 /**
  * Контроллер обработки исключений
@@ -35,7 +39,7 @@ public class ExceptionHandlingController {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ModelAndView handleError400(HttpServletRequest request, Exception ex) {
         ModelAndView modelAndView = getModelAndView();
-        modelAndView.addObject("error", String.format(BAD_REQUEST, request.getRequestURI()));
+        modelAndView.addObject(MESSAGES, new Message(String.format(BAD_REQUEST, request.getRequestURI()), Type.ERROR));
         return modelAndView;
     }
 
@@ -43,10 +47,7 @@ public class ExceptionHandlingController {
     @ExceptionHandler(NoHandlerFoundException.class)
     public ModelAndView handleError404(HttpServletRequest request, Exception ex) {
         ModelAndView modelAndView = getModelAndView();
-        String requestUri = request.getRequestURI();
-        if (requestUri != null) {
-            modelAndView.addObject("error", String.format(NOT_FOUND, requestUri));
-        }
+        modelAndView.addObject(MESSAGES, new Message(String.format(NOT_FOUND, request.getRequestURI()), Type.ERROR));
         return modelAndView;
     }
 
@@ -54,10 +55,7 @@ public class ExceptionHandlingController {
     @ExceptionHandler(IllegalStateException.class)
     public ModelAndView handleError500(HttpServletRequest request, Exception ex) {
         ModelAndView modelAndView = getModelAndView();
-        String parameter = request.getQueryString();
-        if (parameter != null) {
-            modelAndView.addObject("error", String.format(INTERNAL_SERVER_ERROR, parameter));
-        }
+        modelAndView.addObject(MESSAGES, new Message(String.format(INTERNAL_SERVER_ERROR, request.getQueryString()), Type.ERROR));
         return modelAndView;
     }
 

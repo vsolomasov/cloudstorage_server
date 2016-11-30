@@ -12,11 +12,6 @@ public class Message {
     private final String text;
     private final Type type;
 
-    public Message(String text) {
-        this.text = text;
-        this.type = Type.ERROR;
-    }
-
     public Message(String text, Type type) {
         this.text = text;
         this.type = type;
