@@ -1,54 +1,125 @@
 package ru.donstu.cloudstorage.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
 import ru.donstu.cloudstorage.domain.account.entity.Account;
+import ru.donstu.cloudstorage.domain.message.entity.Message;
+import ru.donstu.cloudstorage.domain.message.enums.Type;
+import ru.donstu.cloudstorage.service.account.AccountService;
+import ru.donstu.cloudstorage.validator.util.RegexUtil;
 
-import static ru.donstu.cloudstorage.config.constant.Constants.MESSAGE_PROPERTY;
+import java.util.List;
 
 /**
- * Валидация {@link org.springframework.security.core.userdetails.User}
- * реализует интерфейс {@link Validator}
+ * Класс валидации всех полей {@link Account}
  *
  * @author v.solomasov
  */
 @Component
-@PropertySource(MESSAGE_PROPERTY)
-public class AccountValidator implements Validator {
+public class AccountValidator {
+
+    private static final String LOGIN_REGEX = "validator.login.reg";
+
+    private static final String LOGIN_SAME = "validator.login.same";
+
+    private static final String EMAIL_REGEX = "validator.email.reg";
+
+    private static final String EMAIL_SAME = "validator.email.same";
+
+    private static final String EMAIL_CURRENT = "validator.email.current";
+
+    private static final String PASSWORD_REGEX = "validator.password.reg";
+
+    private static final String PASSWORD_EQUALS = "validator.password.not_equals";
+
+    private static final String PASSWORD_CURRENT = "validator.password.current";
 
     @Autowired
     private Environment environment;
 
     @Autowired
-    private NameValidator nameValidator;
+    private AccountService accountService;
 
-    @Autowired
-    private EmailValidator emailValidator;
-
-    @Autowired
-    private PasswordValidator passwordValidator;
-
-    @Override
-    public boolean supports(Class<?> clazz) {
-        return User.class.equals(clazz);
+    /**
+     * Валидация {@link Account}
+     *
+     * @param target
+     * @param messages
+     */
+    public void validate(Object target, List<Message> messages) {
+        Account account = (Account) target;
+        validateName(account.getName(), messages);
+        validateEmail(account.getEmail(), messages);
+        validatePassword(account.getPassword(), account.getConfirmPassword(), messages);
     }
 
-    @Override
-    public void validate(Object target, Errors errors) {
-        Account account = (Account) target;
+    /**
+     * Валидация имени(логина)
+     *
+     * @param name
+     * @param messages
+     */
+    public void validateName(String name, List<Message> messages) {
+        if (!RegexUtil.checkRegEx(name, RegexUtil.PATTERN_LOGIN_1) || !RegexUtil.checkRegEx(name, RegexUtil.PATTERN_LOGIN_2)) {
+            messages.add(new Message(environment.getRequiredProperty(LOGIN_REGEX), Type.DANGER));
+        }
+        if (accountService.checkAccountName(name)) {
+            messages.add(new Message(environment.getRequiredProperty(LOGIN_SAME), Type.DANGER));
+        }
+    }
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", environment.getRequiredProperty("validator.login.empty"));
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", environment.getRequiredProperty("validator.email.empty"));
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", environment.getRequiredProperty("validator.password.empty"));
+    /**
+     * Валидация электронной почты
+     *
+     * @param email
+     * @param messages
+     */
+    public void validateEmail(String email, List<Message> messages) {
+        if (!RegexUtil.checkRegEx(email, RegexUtil.PATTERN_EMAIL)) {
+            messages.add(new Message(environment.getRequiredProperty(EMAIL_REGEX), Type.DANGER));
+        }
+        if (accountService.checkAccountEmail(email)) {
+            messages.add(new Message(environment.getRequiredProperty(EMAIL_SAME), Type.DANGER));
+        }
+    }
 
-        nameValidator.validate(account.getName(), errors);
-        emailValidator.validate(account.getEmail(), errors);
-        passwordValidator.validate(account.getPassword(), account.getConfirmPassword(), errors);
+    public void validateEmail(Account account, String currentEmail, String newEmail, List<Message> messages) {
+        if (account.getEmail().equals(currentEmail)) {
+            validateEmail(newEmail, messages);
+        } else {
+            messages.add(new Message(environment.getRequiredProperty(EMAIL_CURRENT), Type.DANGER));
+        }
+    }
+
+    /**
+     * Валидация пароля
+     *
+     * @param password
+     * @param confirmPassword
+     * @param messages
+     */
+    public void validatePassword(String password, String confirmPassword, List<Message> messages) {
+        if (!RegexUtil.checkRegEx(password, RegexUtil.PATTERN_PASSWORD)) {
+            messages.add(new Message(environment.getRequiredProperty(PASSWORD_REGEX), Type.DANGER));
+        }
+        if (!password.equals(confirmPassword)) {
+            messages.add(new Message(environment.getRequiredProperty(PASSWORD_EQUALS), Type.DANGER));
+        }
+    }
+
+    public void validatePassword(Account account, String currentPassword, String newPassword, String confirmPassword, List<Message> messages) {
+        if (validateCurrentPassword(account, currentPassword, messages)) {
+            validatePassword(newPassword, confirmPassword, messages);
+        }
+    }
+
+    /*TODO: Как добавиться SHA, сравнивать хэш-функции*/
+    public boolean validateCurrentPassword(Account account, String currentPassword, List<Message> messages) {
+        if (account.getPassword().equals(currentPassword)) {
+            return true;
+        }
+        messages.add(new Message(environment.getRequiredProperty(PASSWORD_CURRENT), Type.DANGER));
+        return false;
     }
 }

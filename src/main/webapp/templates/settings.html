@@ -7,11 +7,13 @@
 <body>
 <div th:include="fragments/header::body"></div>
 <div class="custom-container">
-    <div class="row" th:if="${error}">
-        <div class="offset-xs-1 col-xs-10 offset-md-3 col-md-6 no-padding">
-            <div class="alert alert-danger" th:text="${error}"></div>
+
+    <div class="row" th:each="message : ${messages}">
+        <div class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 no-padding">
+            <div class="alert alert-danger" th:classappend="'alert-' + ${message.type}" th:text="${message.text}"></div>
         </div>
     </div>
+
     <form autocomplete="off" action="/settings/name" method="post">
         <div class="row">
             <input class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 form-control-lg form-control mb-1" type="text" placeholder="Логин"
