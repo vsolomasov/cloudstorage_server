@@ -9,13 +9,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ru.donstu.cloudstorage.domain.account.entity.Account;
+import ru.donstu.cloudstorage.domain.message.entity.Message;
 import ru.donstu.cloudstorage.service.security.SecurityService;
 import ru.donstu.cloudstorage.service.userfiles.UserFilesService;
 import ru.donstu.cloudstorage.validator.FileValidator;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static ru.donstu.cloudstorage.web.cloud.CloudController.ROUTE_CLOUD;
+import static ru.donstu.cloudstorage.web.registration.RegistrationController.MESSAGES;
 
 
 /**
@@ -42,23 +48,26 @@ public class CloudController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String homePage(Model model,
-                           @RequestParam(value = "errors", required = false) boolean errors) {
+                           HttpServletRequest request) {
         Account account = securityService.getLoggedAccount();
         model.addAttribute("isLogged", securityService.isLoggedUser());
         model.addAttribute("userFiles", filesService.findUserFilesByAccount(account));
-        model.addAttribute("errors", errors);
+        model.addAttribute(MESSAGES, request.getSession().getAttribute(MESSAGES));
+        request.getSession().removeAttribute(MESSAGES);
         return "cloud";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveUserFile(@RequestParam("file") MultipartFile file,
-                               Model model) {
-        boolean valid = fileValidator.validate(file);
-        if (!valid) {
-            model.addAttribute("errors", true);
+                               HttpServletRequest request) {
+        Account account = securityService.getLoggedAccount();
+        List<Message> messages = new ArrayList();
+        fileValidator.validate(account, file, messages);
+        if (!messages.isEmpty()) {
+            request.getSession().setAttribute(MESSAGES, messages);
             return REDIRECT_CLOUD;
         }
-        filesService.uploadFile(securityService.getLoggedAccount(), file);
+        filesService.uploadFile(account, file);
         return REDIRECT_CLOUD;
     }
 

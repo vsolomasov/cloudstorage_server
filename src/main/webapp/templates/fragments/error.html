@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="row" th:each="message : ${messages}">
+    <div class="offset-xs-1 col-xs-10 offset-md-2 col-md-8 no-padding">
+        <div class="alert alert-danger" th:classappend="'alert-' + ${message.type}" th:text="${message.text}"></div>
+    </div>
+</div>
+</body>
+</html>

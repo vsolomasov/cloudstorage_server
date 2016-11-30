@@ -58,8 +58,7 @@ public class SettingsController {
 
     @RequestMapping(value = "/name", method = RequestMethod.POST)
     public String settingsName(@RequestParam("name") String name,
-                               HttpServletRequest request,
-                               Model model) {
+                               HttpServletRequest request) {
         List<Message> messages = new ArrayList();
         accountValidator.validateName(name, messages);
         if (!messages.isEmpty()) {
@@ -73,8 +72,7 @@ public class SettingsController {
     @RequestMapping(value = "/email", method = RequestMethod.POST)
     public String settingsEmail(@RequestParam("currentEmail") String currentEmail,
                                 @RequestParam("newEmail") String newEmail,
-                                HttpServletRequest request,
-                                Model model) {
+                                HttpServletRequest request) {
         Account account = securityService.getLoggedAccount();
         List<Message> messages = new ArrayList();
         accountValidator.validateEmail(account, currentEmail, newEmail, messages);
@@ -90,8 +88,7 @@ public class SettingsController {
     public String settingsPassword(@RequestParam("currentPassword") String currentPassword,
                                    @RequestParam("newPassword") String newPassword,
                                    @RequestParam("confirmPassword") String confirmPassword,
-                                   HttpServletRequest request,
-                                   Model model) {
+                                   HttpServletRequest request) {
         Account account = securityService.getLoggedAccount();
         List<Message> messages = new ArrayList();
         accountValidator.validatePassword(account, currentPassword, newPassword, confirmPassword, messages);
@@ -105,8 +102,7 @@ public class SettingsController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String settingsDelete(@RequestParam("password") String password,
-                                 HttpServletRequest request,
-                                 Model model) {
+                                 HttpServletRequest request) {
         Account account = securityService.getLoggedAccount();
         List<Message> messages = new ArrayList();
         accountValidator.validateCurrentPassword(account, password, messages);
