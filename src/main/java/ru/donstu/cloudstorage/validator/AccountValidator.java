@@ -88,6 +88,12 @@ public class AccountValidator {
         }
     }
 
+    /**
+     * @param account
+     * @param currentEmail
+     * @param newEmail
+     * @param messages
+     */
     public void validateEmail(Account account, String currentEmail, String newEmail, List<Message> messages) {
         if (account.getEmail().equals(currentEmail)) {
             validateEmail(newEmail, messages);
@@ -112,13 +118,25 @@ public class AccountValidator {
         }
     }
 
+    /**
+     * @param account
+     * @param currentPassword
+     * @param newPassword
+     * @param confirmPassword
+     * @param messages
+     */
     public void validatePassword(Account account, String currentPassword, String newPassword, String confirmPassword, List<Message> messages) {
         if (validateCurrentPassword(account, currentPassword, messages)) {
             validatePassword(newPassword, confirmPassword, messages);
         }
     }
 
-    /*TODO: Как добавиться SHA, сравнивать хэш-функции*/
+    /**
+     * @param account
+     * @param currentPassword
+     * @param messages
+     * @return
+     */
     public boolean validateCurrentPassword(Account account, String currentPassword, List<Message> messages) {
         if (passwordEncoder.matches(currentPassword, account.getPassword())) {
             return true;

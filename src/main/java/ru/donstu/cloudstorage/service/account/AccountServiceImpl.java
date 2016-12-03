@@ -62,8 +62,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void updateAccountPassword(Account account, String newPassword, String confirmPassword) {
-        logger.info(String.format("Пользователь %d сменил пароль %s на %s", account.getId(), account.getPassword(), newPassword));
-        account.setPassword(passwordEncoder.encode(newPassword));
+        String encodedNewPassword = passwordEncoder.encode(newPassword);
+        logger.info(String.format("Пользователь %d сменил пароль %s на %s", account.getId(), account.getPassword(), encodedNewPassword));
+        account.setPassword(encodedNewPassword);
         accountRepository.save(account);
     }
 
