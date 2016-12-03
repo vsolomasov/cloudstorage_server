@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.donstu.cloudstorage.domain.account.entity.Account;
 import ru.donstu.cloudstorage.domain.message.entity.Message;
 import ru.donstu.cloudstorage.service.account.AccountService;
@@ -60,10 +61,10 @@ public class RegistrationController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String registrationForm(@ModelAttribute("accountForm") Account accountForm,
-                                   HttpServletRequest request,
-                                   Model model) {
+                                   @RequestParam("confirmPassword") String confirmPassword,
+                                   HttpServletRequest request) {
         List<Message> messages = new ArrayList<>();
-        accountValidator.validate(accountForm, messages);
+        accountValidator.validate(accountForm, confirmPassword, messages);
         if (!messages.isEmpty()) {
             request.getSession().setAttribute(MESSAGES, messages);
             return REDIRECT_REGISTRATION;

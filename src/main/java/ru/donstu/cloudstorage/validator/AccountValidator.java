@@ -2,6 +2,7 @@ package ru.donstu.cloudstorage.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.donstu.cloudstorage.domain.account.entity.Account;
 import ru.donstu.cloudstorage.domain.message.entity.Message;
@@ -41,17 +42,20 @@ public class AccountValidator {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     /**
      * Валидация {@link Account}
      *
-     * @param target
+     * @param account
+     * @param confirmPassword
      * @param messages
      */
-    public void validate(Object target, List<Message> messages) {
-        Account account = (Account) target;
+    public void validate(Account account, String confirmPassword, List<Message> messages) {
         validateName(account.getName(), messages);
         validateEmail(account.getEmail(), messages);
-        validatePassword(account.getPassword(), account.getConfirmPassword(), messages);
+        validatePassword(account.getPassword(), confirmPassword, messages);
     }
 
     /**
@@ -116,7 +120,7 @@ public class AccountValidator {
 
     /*TODO: Как добавиться SHA, сравнивать хэш-функции*/
     public boolean validateCurrentPassword(Account account, String currentPassword, List<Message> messages) {
-        if (account.getPassword().equals(currentPassword)) {
+        if (passwordEncoder.matches(currentPassword, account.getPassword())) {
             return true;
         }
         messages.add(new Message(environment.getRequiredProperty(PASSWORD_CURRENT), Type.DANGER));

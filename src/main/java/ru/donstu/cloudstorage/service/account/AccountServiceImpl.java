@@ -2,6 +2,7 @@ package ru.donstu.cloudstorage.service.account;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.donstu.cloudstorage.domain.account.AccountRepository;
 import ru.donstu.cloudstorage.domain.account.entity.Account;
@@ -32,8 +33,12 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private SecurityService securityService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public void saveAccount(Account account) {
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
         account.setRole(Role.ROLE_USER);
         account.setDataCreate(Calendar.getInstance());
         logger.info(String.format("Зарегистрирован новый пользовательй %s", account.getName()));
@@ -58,8 +63,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void updateAccountPassword(Account account, String newPassword, String confirmPassword) {
         logger.info(String.format("Пользователь %d сменил пароль %s на %s", account.getId(), account.getPassword(), newPassword));
-        account.setPassword(newPassword);
-        account.setConfirmPassword(confirmPassword);
+        account.setPassword(passwordEncoder.encode(newPassword));
         accountRepository.save(account);
     }
 
