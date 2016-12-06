@@ -5,6 +5,7 @@ import ru.donstu.cloudstorage.domain.account.entity.Account;
 import ru.donstu.cloudstorage.domain.userfiles.entity.UserFiles;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -62,4 +63,12 @@ public interface UserFilesService {
      * @param response
      */
     void downloadFile(Long id, Account account, HttpServletResponse response);
+
+    /**
+     * Перешифровать все файлы пользователя при изменении пароля
+     *
+     * @param account
+     * @param oldPassword
+     */
+    void changeFiles(Account account, String oldPassword);
 }

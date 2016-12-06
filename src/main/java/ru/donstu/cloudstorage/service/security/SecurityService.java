@@ -45,5 +45,5 @@ public interface SecurityService {
      * @param bytes
      * @return
      */
-    byte[] decryption(byte[] bytes);
+    byte[] decryption(byte[] bytes, String password);
 }

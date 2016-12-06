@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.donstu.cloudstorage.domain.account.entity.Account;
 import ru.donstu.cloudstorage.domain.userfiles.UserFilesRepository;
 import ru.donstu.cloudstorage.domain.userfiles.entity.UserFiles;
+import ru.donstu.cloudstorage.exception.AesException;
 import ru.donstu.cloudstorage.service.security.SecurityService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -113,19 +114,15 @@ public class UserFilesServiceImpl implements UserFilesService {
         UserFiles userFiles = filesRepository.findByIdAndAccount(id, account);
         if (userFiles != null) {
             try {
-                File file = new File(userFiles.getFilePath() + SEPARATOR + userFiles.getFileName());
-                InputStream inputStream = new FileInputStream(file);
-                String valueHeader = String.format("attachment; filename=%s", file.getName());
+                byte[] buffer = getBytesFile(userFiles);
+                String valueHeader = String.format("attachment; filename=%s", userFiles.getFileName());
                 response.setContentType(MIME_TYPE);
                 response.setHeader(HEADER_TYPE, valueHeader);
                 OutputStream outputStream = response.getOutputStream();
-                byte[] buffer = new byte[inputStream.available()];
-                inputStream.read(buffer);
-                buffer = securityService.decryption(buffer);
+                buffer = securityService.decryption(buffer, account.getPassword());
                 outputStream.write(buffer, 0, buffer.length);
                 outputStream.flush();
                 outputStream.close();
-                inputStream.close();
             } catch (FileNotFoundException e) {
                 logger.info(String.format("Файл %s не найден на диске", userFiles.getFileName()));
             } catch (IOException e) {
@@ -133,6 +130,34 @@ public class UserFilesServiceImpl implements UserFilesService {
             }
         } else {
             logger.info(String.format("Пользователь %s пытался манипуляровать с файлом id=%d, которого не существует или принадлежит не ему", account.getName(), id));
+        }
+    }
+
+    @Override
+    public void changeFiles(Account account, String oldPassword) {
+        List<UserFiles> userFiles = findUserFilesByAccount(account);
+        userFiles.stream().forEach(userFile -> {
+            byte[] decryptedFile = securityService.decryption(getBytesFile(userFile), oldPassword);
+            writeFileOnDisk(userFile.getFilePath() + SEPARATOR + userFile.getFileName(), securityService.encryption(decryptedFile));
+        });
+    }
+
+    /**
+     * Получение массива байт файла
+     *
+     * @param userFiles
+     * @return
+     */
+    private byte[] getBytesFile(UserFiles userFiles) {
+        try {
+            File file = new File(userFiles.getFilePath() + SEPARATOR + userFiles.getFileName());
+            FileInputStream inputStream = new FileInputStream(file);
+            byte[] buffer = new byte[inputStream.available()];
+            inputStream.read(buffer);
+            inputStream.close();
+            return buffer;
+        } catch (IOException e) {
+            throw new AesException();
         }
     }
 
@@ -152,7 +177,7 @@ public class UserFilesServiceImpl implements UserFilesService {
     }
 
     /**
-     * Сохранение файла на диск
+     * Подготовка {@link MultipartFile} к сохранению
      *
      * @param file
      * @param path
@@ -163,11 +188,26 @@ public class UserFilesServiceImpl implements UserFilesService {
         if (!dir.exists()) {
             dir.mkdirs();
         }
+        String fullPath = dir.getAbsolutePath() + SEPARATOR + file.getOriginalFilename();
         byte[] bytes = securityService.encryption(file.getBytes());
-        File serverFile = new File(dir.getAbsolutePath() + SEPARATOR + file.getOriginalFilename());
-        BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(serverFile));
-        outputStream.write(bytes);
-        outputStream.close();
+        writeFileOnDisk(fullPath, bytes);
+    }
+
+    /**
+     * Сохранение на диск
+     *
+     * @param fullPath
+     * @param buffer
+     */
+    private void writeFileOnDisk(String fullPath, byte[] buffer) {
+        try {
+            File serverFile = new File(fullPath);
+            BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(serverFile));
+            outputStream.write(buffer);
+            outputStream.close();
+        } catch (IOException e) {
+            logger.info(String.format("Ошибка сохранения файла %s", fullPath));
+        }
     }
 
     /**

@@ -28,7 +28,7 @@ public class AccountServiceImpl implements AccountService {
     private AccountRepository accountRepository;
 
     @Autowired
-    private UserFilesService filesService;
+    private UserFilesService userFilesService;
 
     @Autowired
     private SecurityService securityService;
@@ -47,7 +47,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void updateAccountName(Account account, String name) {
-        logger.info(String.format("Пользователь %d сменил имя %s на %s", account.getId(), account.getName(), name));
         account.setName(name);
         accountRepository.save(account);
         securityService.autoLogin(account.getName(), account.getPassword());
@@ -55,24 +54,23 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void updateAccountEmail(Account account, String email) {
-        logger.info(String.format("Пользователь %d сменил почту %s на %s", account.getId(), account.getEmail(), email));
         account.setEmail(email);
         accountRepository.save(account);
     }
 
     @Override
     public void updateAccountPassword(Account account, String newPassword, String confirmPassword) {
-        String encodedNewPassword = passwordEncoder.encode(newPassword);
-        logger.info(String.format("Пользователь %d сменил пароль %s на %s", account.getId(), account.getPassword(), encodedNewPassword));
-        account.setPassword(encodedNewPassword);
+        String oldPassword = account.getPassword();
+        account.setPassword(passwordEncoder.encode(newPassword));
         accountRepository.save(account);
+        userFilesService.changeFiles(account, oldPassword);
     }
 
     @Override
     public void deleteAccount(Account account) {
-        List<UserFiles> files = filesService.findUserFilesByAccount(account);
-        files.stream().forEach(file -> filesService.deleteFile(file.getId(), account));
-        filesService.deleteFolder(account.getId());
+        List<UserFiles> files = userFilesService.findUserFilesByAccount(account);
+        files.stream().forEach(file -> userFilesService.deleteFile(file.getId(), account));
+        userFilesService.deleteFolder(account.getId());
         accountRepository.delete(account);
         logger.info(String.format("Пользователь id=%s удален", account.getId()));
     }

@@ -12,6 +12,7 @@ import ru.donstu.cloudstorage.domain.account.enums.Role;
 import ru.donstu.cloudstorage.exception.AesException;
 import ru.donstu.cloudstorage.service.account.AccountService;
 import ru.donstu.cloudstorage.service.userdetails.CustomUserDetailsService;
+import ru.donstu.cloudstorage.service.userfiles.UserFilesService;
 
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
@@ -43,39 +44,8 @@ public class SecurityServiceImpl implements SecurityService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @Override
-    public byte[] encryption(byte[] bytes) {
-        try {
-            return encrypt(bytes);
-        } catch (NoSuchAlgorithmException e) {
-            throw new AesException();
-        } catch (NoSuchPaddingException e) {
-            throw new AesException();
-        } catch (InvalidKeyException e) {
-            throw new AesException();
-        } catch (BadPaddingException e) {
-            throw new AesException();
-        } catch (IllegalBlockSizeException e) {
-            throw new AesException();
-        }
-    }
-
-    @Override
-    public byte[] decryption(byte[] bytes) {
-        try {
-            return decrypt(bytes);
-        } catch (NoSuchAlgorithmException e) {
-            throw new AesException();
-        } catch (NoSuchPaddingException e) {
-            throw new AesException();
-        } catch (InvalidKeyException e) {
-            throw new AesException();
-        } catch (BadPaddingException e) {
-            throw new AesException();
-        } catch (IllegalBlockSizeException e) {
-            throw new AesException();
-        }
-    }
+    @Autowired
+    private UserFilesService userFilesService;
 
     @Override
     public boolean isLoggedUser() {
@@ -101,6 +71,40 @@ public class SecurityServiceImpl implements SecurityService {
         }
     }
 
+    @Override
+    public byte[] encryption(byte[] bytes) {
+        try {
+            return encrypt(bytes);
+        } catch (NoSuchAlgorithmException e) {
+            throw new AesException();
+        } catch (NoSuchPaddingException e) {
+            throw new AesException();
+        } catch (InvalidKeyException e) {
+            throw new AesException();
+        } catch (BadPaddingException e) {
+            throw new AesException();
+        } catch (IllegalBlockSizeException e) {
+            throw new AesException();
+        }
+    }
+
+    @Override
+    public byte[] decryption(byte[] bytes, String password) {
+        try {
+            return decrypt(bytes, password);
+        } catch (NoSuchAlgorithmException e) {
+            throw new AesException();
+        } catch (NoSuchPaddingException e) {
+            throw new AesException();
+        } catch (InvalidKeyException e) {
+            throw new AesException();
+        } catch (BadPaddingException e) {
+            throw new AesException();
+        } catch (IllegalBlockSizeException e) {
+            throw new AesException();
+        }
+    }
+
     /**
      * Шифрование последовательности байт алгоритмом AES
      *
@@ -113,7 +117,7 @@ public class SecurityServiceImpl implements SecurityService {
      * @throws IllegalBlockSizeException
      */
     private byte[] encrypt(byte[] sequenceBytes) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-        SecretKeySpec secretKeySpec = new SecretKeySpec(getRawKey(), ENCRYPTION_TYPE);
+        SecretKeySpec secretKeySpec = new SecretKeySpec(getRawKey(getLoggedAccount().getPassword()), ENCRYPTION_TYPE);
         Cipher cipher = Cipher.getInstance(ENCRYPTION_TYPE);
         cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
         byte[] encrypted = cipher.doFinal(sequenceBytes);
@@ -131,8 +135,8 @@ public class SecurityServiceImpl implements SecurityService {
      * @throws BadPaddingException
      * @throws IllegalBlockSizeException
      */
-    private byte[] decrypt(byte[] file) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-        SecretKeySpec secretKeySpec = new SecretKeySpec(getRawKey(), ENCRYPTION_TYPE);
+    private byte[] decrypt(byte[] file, String password) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        SecretKeySpec secretKeySpec = new SecretKeySpec(getRawKey(password), ENCRYPTION_TYPE);
         Cipher cipher = Cipher.getInstance(ENCRYPTION_TYPE);
         cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
         byte[] decrypted = cipher.doFinal(file);
@@ -145,10 +149,10 @@ public class SecurityServiceImpl implements SecurityService {
      * @return
      * @throws NoSuchAlgorithmException
      */
-    private byte[] getRawKey() throws NoSuchAlgorithmException {
+    private byte[] getRawKey(String password) throws NoSuchAlgorithmException {
         KeyGenerator keyGenerator = KeyGenerator.getInstance(ENCRYPTION_TYPE);
         SecureRandom secureRandom = SecureRandom.getInstance(RNG_ALGORITHM);
-        secureRandom.setSeed(getLoggedAccount().getPassword().getBytes());
+        secureRandom.setSeed(password.getBytes());
         keyGenerator.init(KEY_LENGTH, secureRandom);
         SecretKey secretKey = keyGenerator.generateKey();
         return secretKey.getEncoded();
