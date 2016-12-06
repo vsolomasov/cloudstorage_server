@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import ru.donstu.cloudstorage.domain.message.entity.Message;
 import ru.donstu.cloudstorage.domain.message.enums.Type;
+import ru.donstu.cloudstorage.exception.AesException;
 import ru.donstu.cloudstorage.service.security.SecurityService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,6 +57,13 @@ public class ExceptionHandlingController {
     public ModelAndView handleError500(HttpServletRequest request, Exception ex) {
         ModelAndView modelAndView = getModelAndView();
         modelAndView.addObject(MESSAGES, new Message(String.format(INTERNAL_SERVER_ERROR, request.getQueryString()), Type.ERROR));
+        return modelAndView;
+    }
+
+    @ExceptionHandler(AesException.class)
+    public ModelAndView handleErrorAES(HttpServletRequest request, Exception ex) {
+        ModelAndView modelAndView = getModelAndView();
+        modelAndView.addObject(MESSAGES, new Message(ex.getMessage(), Type.ERROR));
         return modelAndView;
     }
 

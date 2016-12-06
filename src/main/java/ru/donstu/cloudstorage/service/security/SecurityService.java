@@ -30,4 +30,20 @@ public interface SecurityService {
      * @param password
      */
     void autoLogin(String name, String password);
+
+    /**
+     * Шифрование AES
+     *
+     * @param bytes
+     * @return
+     */
+    byte[] encryption(byte[] bytes);
+
+    /**
+     * Дешифрование AES
+     *
+     * @param bytes
+     * @return
+     */
+    byte[] decryption(byte[] bytes);
 }

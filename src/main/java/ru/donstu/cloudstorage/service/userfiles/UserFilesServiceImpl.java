@@ -4,12 +4,12 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.donstu.cloudstorage.domain.account.entity.Account;
 import ru.donstu.cloudstorage.domain.userfiles.UserFilesRepository;
 import ru.donstu.cloudstorage.domain.userfiles.entity.UserFiles;
+import ru.donstu.cloudstorage.service.security.SecurityService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -37,7 +37,7 @@ public class UserFilesServiceImpl implements UserFilesService {
 
     private static final String HEADER_TYPE = "Content-Disposition";
 
-    private static final String USER_FILES = "linux.user_files";
+    private static final String USER_FILES = "win.user_files";
 
     private static final int DIVIDE_MEGABYTE = 1000000;
 
@@ -49,12 +49,15 @@ public class UserFilesServiceImpl implements UserFilesService {
     @Autowired
     private Environment environment;
 
+    @Autowired
+    private SecurityService securityService;
+
     @Override
     public void uploadFile(Account account, MultipartFile file) {
         String fullNameFile = file.getOriginalFilename();
         String path = environment.getRequiredProperty(USER_FILES) + SEPARATOR + account.getId();
         try {
-            saveFileOnDisk(file, path, fullNameFile);
+            saveFileOnDisk(file, path);
             saveInfoFile(account, fullNameFile, file.getSize(), path);
             logger.info(String.format("Файл %s загружен", fullNameFile));
         } catch (FileNotFoundException e) {
@@ -116,11 +119,10 @@ public class UserFilesServiceImpl implements UserFilesService {
                 response.setContentType(MIME_TYPE);
                 response.setHeader(HEADER_TYPE, valueHeader);
                 OutputStream outputStream = response.getOutputStream();
-                byte[] buffer = new byte[1024];
-                int len;
-                while ((len = inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, len);
-                }
+                byte[] buffer = new byte[inputStream.available()];
+                inputStream.read(buffer);
+                buffer = securityService.decryption(buffer);
+                outputStream.write(buffer, 0, buffer.length);
                 outputStream.flush();
                 outputStream.close();
                 inputStream.close();
@@ -143,7 +145,7 @@ public class UserFilesServiceImpl implements UserFilesService {
      */
     private void deleteFileFromDisk(String path, String name) throws FileNotFoundException {
         File file = new File(path + SEPARATOR + name);
-        if (!file.exists()){
+        if (!file.exists()) {
             throw new FileNotFoundException();
         }
         file.delete();
@@ -154,16 +156,15 @@ public class UserFilesServiceImpl implements UserFilesService {
      *
      * @param file
      * @param path
-     * @param fullNameFile
      * @throws IOException
      */
-    private void saveFileOnDisk(MultipartFile file, String path, String fullNameFile) throws IOException {
-        byte[] bytes = file.getBytes();
+    private void saveFileOnDisk(MultipartFile file, String path) throws IOException {
         File dir = new File(path);
         if (!dir.exists()) {
             dir.mkdirs();
         }
-        File serverFile = new File(dir.getAbsolutePath() + SEPARATOR + fullNameFile);
+        byte[] bytes = securityService.encryption(file.getBytes());
+        File serverFile = new File(dir.getAbsolutePath() + SEPARATOR + file.getOriginalFilename());
         BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(serverFile));
         outputStream.write(bytes);
         outputStream.close();
@@ -175,7 +176,7 @@ public class UserFilesServiceImpl implements UserFilesService {
      * @param account
      * @param fileName
      */
-    private void saveInfoFile(Account account, String fileName, Long size, String path){
+    private void saveInfoFile(Account account, String fileName, Long size, String path) {
         UserFiles userFiles = new UserFiles();
         userFiles.setAccount(account);
         userFiles.setFileName(fileName);
