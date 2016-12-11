@@ -24,7 +24,7 @@ public class FileValidator {
     private static final String FILE_SAME = "validator.file.same";
 
     @Autowired
-    private UserFilesService filesService;
+    private UserFilesService userFilesService;
 
     @Autowired
     private Environment environment;
@@ -33,7 +33,7 @@ public class FileValidator {
         if (multipartFile.isEmpty()) {
             messages.add(new Message(environment.getRequiredProperty(FILE_EMPTY), Type.DANGER));
         }
-        if (filesService.checkUserFile(account, multipartFile.getOriginalFilename())) {
+        if (userFilesService.checkUserFile(account, multipartFile.getOriginalFilename())) {
             messages.add(new Message(environment.getRequiredProperty(FILE_SAME), Type.DANGER));
         }
     }

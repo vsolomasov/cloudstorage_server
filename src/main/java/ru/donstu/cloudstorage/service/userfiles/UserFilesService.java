@@ -65,7 +65,7 @@ public interface UserFilesService {
     void downloadFile(Long id, Account account, HttpServletResponse response);
 
     /**
-     * Перешифровать все файлы пользователя при изменении пароля
+     * Изменить все файлы пользователя при изменении пароля
      *
      * @param account
      * @param oldPassword
