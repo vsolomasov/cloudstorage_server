@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta th:include="/fragments/resources::head">
+    <title th:text="'Инфо #' + ${news.id}"></title>
+</head>
+<body>
+<div th:include="fragments/header::body"></div>
+<div class="custom-container text-md-center text-xs-center">
+    <div class="mb-2" th:each="item : ${news}">
+        <h2 th:text="${item.titleNews}"></h2>
+        <p style="text-align: justify" th:text="${item.textNews}"></p>
+        <p><a th:href="@{/}" class="btn btn-md btn-secondary">Вернуться к инфо</a></p>
+    </div>
+</div>
+<div class="footer-container">
+    <div th:include="fragments/footer::body"></div>
+</div>
+</body>
+</html>

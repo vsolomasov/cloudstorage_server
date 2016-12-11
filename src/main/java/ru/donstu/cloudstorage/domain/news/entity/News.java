@@ -1,5 +1,7 @@
 package ru.donstu.cloudstorage.domain.news.entity;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 
 /**
@@ -23,6 +25,7 @@ public class News {
     @Column(name = "description", nullable = false)
     private String descriptionNews;
 
+    @Type(type = "text")
     @Column(name = "text", nullable = false)
     private String textNews;
 

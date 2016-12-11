@@ -17,4 +17,12 @@ public interface NewsService {
      * @return
      */
     List<News> findAllNews();
+
+    /**
+     * Найти новость по номеру
+     *
+     * @param id
+     * @return
+     */
+    News findNewsById(Long id);
 }

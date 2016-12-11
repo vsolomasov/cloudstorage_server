@@ -9,4 +9,6 @@ import java.util.List;
  * @author v.solomasov
  */
 public interface NewsRepository extends JpaRepository<News, Long> {
+
+    News findById(Long id);
 }

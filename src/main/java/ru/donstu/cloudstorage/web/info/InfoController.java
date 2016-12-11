@@ -3,6 +3,7 @@ package ru.donstu.cloudstorage.web.info;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.donstu.cloudstorage.service.news.NewsService;
@@ -37,5 +38,17 @@ public class InfoController {
         model.addAttribute("news", newsService.findAllNews());
         model.addAttribute("isLogged", isLogged);
         return "info";
+    }
+
+    @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
+    public String detailPage(Model model,
+                             @PathVariable("id") Long id) {
+        boolean isLogged = securityService.isLoggedUser();
+        if (isLogged) {
+            return REDIRECT_CLOUD;
+        }
+        model.addAttribute("news", newsService.findNewsById(id));
+        model.addAttribute("isLogged", isLogged);
+        return "detail";
     }
 }
