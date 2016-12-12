@@ -58,14 +58,17 @@ public class SettingsController {
 
     @RequestMapping(value = "/name", method = RequestMethod.POST)
     public String settingsName(@RequestParam("name") String name,
+                               @RequestParam("currentPassword") String currentPassword,
                                HttpServletRequest request) {
+        Account account = securityService.getLoggedAccount();
         List<Message> messages = new ArrayList();
         accountValidator.validateName(name, messages);
+        accountValidator.validateCurrentPassword(account, currentPassword, messages);
         if (!messages.isEmpty()) {
             request.getSession().setAttribute(MESSAGES, messages);
             return REDIRECT_SETTINGS;
         }
-        accountService.updateAccountName(securityService.getLoggedAccount(), name);
+        accountService.updateAccountName(account, name, currentPassword);
         return REDIRECT_CLOUD;
     }
 

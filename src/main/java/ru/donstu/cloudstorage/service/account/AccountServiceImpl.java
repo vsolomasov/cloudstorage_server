@@ -46,10 +46,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void updateAccountName(Account account, String name) {
+    public void updateAccountName(Account account, String name, String password) {
         account.setName(name);
         accountRepository.save(account);
-        securityService.autoLogin(account.getName(), account.getPassword());
+        securityService.autoLogin(account.getName(), password);
     }
 
     @Override
